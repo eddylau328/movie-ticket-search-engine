@@ -2,7 +2,7 @@ import express from "express";
 import {
   GetMovieListController,
   GetMovieDetailController,
-  GetTheaterListController,
+  GetCinemaListController,
   GetMovieTimeslotsController,
 } from "./src/controllers";
 
@@ -10,7 +10,7 @@ const app = express();
 
 const getMovieListController = new GetMovieListController();
 const getMovieDetailController = new GetMovieDetailController();
-const getTheaterListController = new GetTheaterListController();
+const getTheaterListController = new GetCinemaListController();
 const getMovieTimeslotsController = new GetMovieTimeslotsController();
 
 app.get("/movies/:movieId/timeslots", (req, res) =>
