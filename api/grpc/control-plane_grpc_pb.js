@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
-var grpc = require('grpc');
+var grpc = require('@grpc/grpc-js');
 var control$plane_pb = require('./control-plane_pb.js');
 
 function serialize_GetAvailableMovieListRequest(arg) {
@@ -93,9 +93,9 @@ function deserialize_MovieDetail(buffer_arg) {
 }
 
 
-var EnquiryBotService = exports.EnquiryBotService = {
+var ControlPlaneService = exports.ControlPlaneService = {
   getAvailableMovieList: {
-    path: '/EnquiryBot/getAvailableMovieList',
+    path: '/ControlPlane/getAvailableMovieList',
     requestStream: false,
     responseStream: false,
     requestType: control$plane_pb.GetAvailableMovieListRequest,
@@ -105,8 +105,8 @@ var EnquiryBotService = exports.EnquiryBotService = {
     responseSerialize: serialize_GetAvailableMovieListResponse,
     responseDeserialize: deserialize_GetAvailableMovieListResponse,
   },
-  getMovieDetails: {
-    path: '/EnquiryBot/getMovieDetails',
+  getMovieDetail: {
+    path: '/ControlPlane/getMovieDetail',
     requestStream: false,
     responseStream: false,
     requestType: control$plane_pb.GetMovieDetailsRequest,
@@ -117,7 +117,7 @@ var EnquiryBotService = exports.EnquiryBotService = {
     responseDeserialize: deserialize_MovieDetail,
   },
   getCinemaList: {
-    path: '/EnquiryBot/getCinemaList',
+    path: '/ControlPlane/getCinemaList',
     requestStream: false,
     responseStream: false,
     requestType: control$plane_pb.GetCinemaListRequest,
@@ -128,7 +128,7 @@ var EnquiryBotService = exports.EnquiryBotService = {
     responseDeserialize: deserialize_GetCinemaListResponse,
   },
   getMovieTimeslots: {
-    path: '/EnquiryBot/getMovieTimeslots',
+    path: '/ControlPlane/getMovieTimeslots',
     requestStream: false,
     responseStream: false,
     requestType: control$plane_pb.GetMovieTimeslotsRequest,
@@ -140,4 +140,4 @@ var EnquiryBotService = exports.EnquiryBotService = {
   },
 };
 
-exports.EnquiryBotClient = grpc.makeGenericClientConstructor(EnquiryBotService);
+exports.ControlPlaneClient = grpc.makeGenericClientConstructor(ControlPlaneService);

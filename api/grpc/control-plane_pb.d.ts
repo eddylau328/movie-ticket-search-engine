@@ -194,8 +194,8 @@ export namespace GetAvailableMovieListResponse {
 }
 
 export class GetMovieDetailsRequest extends jspb.Message {
-  getId(): string;
-  setId(value: string): void;
+  getMovieName(): string;
+  setMovieName(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetMovieDetailsRequest.AsObject;
@@ -209,7 +209,7 @@ export class GetMovieDetailsRequest extends jspb.Message {
 
 export namespace GetMovieDetailsRequest {
   export type AsObject = {
-    id: string,
+    movieName: string,
   }
 }
 
@@ -252,8 +252,8 @@ export namespace GetCinemaListResponse {
 }
 
 export class GetMovieTimeslotsRequest extends jspb.Message {
-  getId(): string;
-  setId(value: string): void;
+  getMovieName(): string;
+  setMovieName(value: string): void;
 
   getPriceLte(): number;
   setPriceLte(value: number): void;
@@ -282,7 +282,7 @@ export class GetMovieTimeslotsRequest extends jspb.Message {
 
 export namespace GetMovieTimeslotsRequest {
   export type AsObject = {
-    id: string,
+    movieName: string,
     priceLte: number,
     priceGte: number,
     timeLte: string,
@@ -310,26 +310,6 @@ export class GetMovieTimeslotsResponse extends jspb.Message {
 export namespace GetMovieTimeslotsResponse {
   export type AsObject = {
     movieTimeslotsList: Array<MovieTimeslot.AsObject>,
-  }
-}
-
-export class ProviderProperty extends jspb.Message {
-  getProvider(): ProviderMap[keyof ProviderMap];
-  setProvider(value: ProviderMap[keyof ProviderMap]): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ProviderProperty.AsObject;
-  static toObject(includeInstance: boolean, msg: ProviderProperty): ProviderProperty.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: ProviderProperty, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ProviderProperty;
-  static deserializeBinaryFromReader(message: ProviderProperty, reader: jspb.BinaryReader): ProviderProperty;
-}
-
-export namespace ProviderProperty {
-  export type AsObject = {
-    provider: ProviderMap[keyof ProviderMap],
   }
 }
 
