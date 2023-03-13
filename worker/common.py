@@ -4,12 +4,10 @@ from enum import Enum
 from typing import List
 
 
-@dataclass
 class Provider(str, Enum):
     MCL = 'mcl-cinemas'
 
 
-@dataclass
 class District(str, Enum):
     ISLANDS = 'islands'
     KWAI_TSING = 'kwai-tsing'
@@ -29,6 +27,21 @@ class District(str, Enum):
     EASTERN = 'eastern'
     SOUTHERN = 'southern'
     WAN_CHAI = 'wan-chai'
+
+
+class Territory(str, Enum):
+    KOWLOON = 'kowloon'
+    NEW_TERRITORIES = 'new-territories'
+    HONG_KONG_ISLAND = 'hong-kong-island'
+
+
+@dataclass
+class Cinema:
+    id: str
+    name: str
+    provider: str
+    location: str
+    territory: str
 
 
 @dataclass
@@ -54,12 +67,15 @@ class MovieDetail(Movie):
     description: str
 
 
-class MovieFetcher(ABC):
-
+class EnquiryBot(ABC):
     @abstractmethod
-    async def get_available_movie_list(self) -> List[Movie]:
+    async def get_available_movie_list(self, **kwargs) -> List[Movie]:
         """
         Provide list of movies that is available to watch
+
+        kwargs
+        - cinema_id         : need to provide for cinema_provider
+        - cinema_provider   : need to provide with cinema_id
         """
         pass
 
@@ -67,6 +83,13 @@ class MovieFetcher(ABC):
     async def get_movie_details(self, id: str) -> MovieDetail:
         """
         Provide description about the movie 
+        """
+        pass
+
+    @abstractmethod
+    async def get_cinema_list(self) -> List[Cinema]:
+        """
+        Provide a list of cinemas in Hong Kong
         """
         pass
 

@@ -1,6 +1,6 @@
 from common import (
     Movie,
-    MovieFetcher,
+    EnquiryBot,
     Provider,
 )
 from typing import List
@@ -8,7 +8,7 @@ from typing import List
 import aiohttp
 
 
-class MCLFetcher(MovieFetcher):
+class MCLEnquiryBot(EnquiryBot):
 
     async def get_available_movie_list(self) -> List[Movie]:
         async with aiohttp.ClientSession() as session:
