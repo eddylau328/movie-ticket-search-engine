@@ -15,25 +15,31 @@ import control_plane_pb2 as pb2
 class ControlPlaneService(pb2_grpc.ControlPlaneServicer):
     def getAvailableMovieList(
         self,
+        request,
+        context
     ) -> List[Movie]:
-        return pb2.GetAvailableMovieListResponse([])
+        return pb2.GetAvailableMovieListResponse()
 
     def getMovieDetail(
         self,
-        movie_name: str,
+        request,
+        context
     ) -> MovieDetail:
         return pb2.MovieDetail()
 
     def getCinemaList(
         self,
+        request,
+        context
     ) -> List[Cinema]:
-        return pb2.GetCinemaListResponse([])
+        return pb2.GetCinemaListResponse()
 
     def getMovieTimeslots(
         self,
-        **kwargs,
+        request,
+        context
     ) -> List[MovieTimeslot]:
-        return pb2.GetMovieTimeslotsResponse([])
+        return pb2.GetMovieTimeslotsResponse()
 
 
 def serve():
