@@ -33,3 +33,45 @@ stateDiagram-v2
     ... --> Controller
     Worker_N --> Controller
 ```
+
+## Worker structure
+
+```mermaid
+classDiagram
+    EnquiryController --* EnquiryBot
+    EnquiryBot <|-- OverallEnquiryBot
+    EnquiryBot <|-- MCLEnquiryBot
+    EnquiryBot <|-- EmperorEnquiryBot
+    EnquiryBot <|-- GoldenHarvestEnquiryBot
+
+    class EnquiryController{
+        +Map[EnquiryBot] bots
+        +get_available_movie_list(filters) List[Movie]
+        +get_movie_description(name) MovieDetail
+        +get_cinema_list(filters) List[Cinema]
+        +get_movie_timeslots(filters) List[MovieTimeslot]
+    }
+
+    class EnquiryBot{
+        +Enum provider*
+        +get_available_movie_list(filters)* List[Movie]
+        +get_cinema_list(filters)* List[Cinema]
+        +get_movie_timeslots(filters)* List[MovieTimeslot]
+    }
+
+    class OverallEnquiryBot{
+        +Enum provider
+    }
+
+    class MCLEnquiryBot{
+        +Enum provider
+    }
+
+    class EmperorEnquiryBot{
+        +Enum provider
+    }
+
+    class GoldenHarvestEnquiryBot{
+        +Enum provider
+    }
+```
