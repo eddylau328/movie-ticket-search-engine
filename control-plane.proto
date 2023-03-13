@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package movie;
+
+service ControlPlane {
+  // Returns a list of movies
+  rpc GetMovieList(GetMovieListRequest) returns (GetMovieListResponse) {}
+
+  // Returns the description of a specific movie
+  rpc GetMovieDescription(GetMovieDescriptionRequest) returns (GetMovieDescriptionResponse) {}
+
+  // Returns a list of showings for a specific movie
+  rpc GetShowingsByMovieId(GetShowingsByMovieIdRequest) returns (GetShowingsByMovieIdResponse) {}
+
+  // Returns a list of movies filtered by specific criteria
+  rpc GetFilteredMovieList(GetFilteredMovieListRequest) returns (GetFilteredMovieListResponse) {}
+}
+
+message GetMovieListRequest {
+  // Optional parameters for filtering the movie list
+  string filter = 1;
+}
+
+message GetMovieListResponse {
+  // List of movies
+  repeated Movie movie_list = 1;
+}
+
+message GetMovieDescriptionRequest {
+  // ID of the movie to retrieve description for
+  int32 movie_id = 1;
+}
+
+message GetMovieDescriptionResponse {
+  // Description of the movie
+  string description = 1;
+}
+
+message GetShowingsByMovieIdRequest {
+  // ID of the movie to retrieve showings for
+  int32 movie_id = 1;
+}
+
+message Showing {
+  // Details about a specific showing of a movie
+  int32 showing_id = 1;
+  string theater_name = 2;
+  string start_time = 3;
+  string end_time = 4;
+}
+
+message GetShowingsByMovieIdResponse {
+  // List of showings for the movie
+  repeated Showing showings_list = 1;
+}
+
+message GetFilteredMovieListRequest {
+  // Optional parameters for filtering the movie list
+  string filter = 1;
+  int32 min_rating = 2;
+  int32 max_duration = 3;
+}
+
+message GetFilteredMovieListResponse {
+  // List of movies filtered by specific criteria
+  repeated Movie movie_list = 1;
+}
+
+message Movie {
+  // Details about a specific movie
+  int32 id = 1;
+  string title = 2;
+  string director = 3;
+  string release_date = 4;
+  int32 duration = 5;
+  float rating = 6;
+}
