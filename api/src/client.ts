@@ -3,7 +3,7 @@ import { credentials, Metadata, ServiceError } from "@grpc/grpc-js";
 
 const address = "localhost:50051";
 const client = new ControlPlaneClient(address, credentials.createInsecure());
-client.waitForReady(Date.now() + 5000, (error: Error | null) => {
+client.waitForReady(Date.now() + 5000, (error?: Error) => {
   if (error) {
     console.error(error);
   } else {
