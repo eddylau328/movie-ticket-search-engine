@@ -7,17 +7,21 @@
 This is a search engine for Hong Kong movie tickets. It allows user to provide fields to search through Hong Kong cinemas to find the available time slots, so that they could choose from a filtered list of available time slot and find the best and suitable price for a movie.
 
 ### Built With
+
 #### Website
+
 - React JS
 - REST
 
 #### API Gateway
+
 - REST
 - GRPC
 - Express
 - NodeJS
 
 #### Control Plane & Workers
+
 - GRPC
 - Python
 
@@ -41,7 +45,6 @@ Run the following command to start the containers defined in the docker-compose.
 > docker-compose up
 ```
 
-
 This will start all the services and containers defined in the YAML file, and you should see logs from each container being printed to the terminal. By default, the containers run in the foreground. If you want to run them in the background, you can use the -d flag:
 
 ```sh
@@ -53,11 +56,12 @@ Once the containers are up and running, you can access the WEB UI with localhost
 
 Stop the containers:
 To stop the containers, use the following command:
+
 ```sh
 > docker-compose down
 ```
 
-## Description 
+## Description
 
 This architecture consists of an web UI interface that communicates with an API server. The API server is responsible for handling requests from the interface, and it communicates with three external services: themoviedb.org, wmoov.com, and a group of worker nodes.
 
@@ -76,7 +80,7 @@ stateDiagram-v2
     APIServer --> Interface
     APIServer --> Controller
     APIServer --> themoviedb.org
-    themoviedb.org API --> APIServer 
+    themoviedb.org API --> APIServer
     APIServer --> wmoov.com
     wmoov.com --> APIServer
     Controller --> APIServer
@@ -93,9 +97,7 @@ stateDiagram-v2
 ```mermaid
 classDiagram
     EnquiryController --* EnquiryBot
-    EnquiryBot <|-- OverallEnquiryBot
     EnquiryBot <|-- MCLEnquiryBot
-    EnquiryBot <|-- EmperorEnquiryBot
     EnquiryBot <|-- GoldenHarvestEnquiryBot
 
     class EnquiryController{
@@ -113,15 +115,7 @@ classDiagram
         +get_movie_timeslots(filters)* List[MovieTimeslot]
     }
 
-    class OverallEnquiryBot{
-        +Enum provider
-    }
-
     class MCLEnquiryBot{
-        +Enum provider
-    }
-
-    class EmperorEnquiryBot{
         +Enum provider
     }
 
