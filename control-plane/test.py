@@ -40,10 +40,10 @@ class ControlPlaneClient:
         Client function to call the rpc for getMovieTimeslots
         """
         request_body = pb2.GetMovieTimeslotsRequest(**kwargs)
-        return self.stub.getCinemaList(request_body)
+        return self.stub.getMovieTimeslots(request_body)
 
 
 if __name__ == '__main__':
     client = ControlPlaneClient()
-    result = client.getCinemaList()
+    result = client.getMovieTimeslots(movie_name='鈴芽之旅')
     print(result)

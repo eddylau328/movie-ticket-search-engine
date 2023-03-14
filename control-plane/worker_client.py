@@ -35,9 +35,9 @@ class EnquiryBotClient:
         request_body = pb2.GetCinemaListRequest()
         return self.stub.getCinemaList(request_body)
 
-    async def getMovieTimeslots(self, **kwargs):
+    def getMovieTimeslots(self, **kwargs):
         """
         Client function to call the rpc for getMovieTimeslots
         """
         request_body = pb2.GetMovieTimeslotsRequest(**kwargs)
-        return self.stub.getCinemaList(request_body)
+        return self.stub.getMovieTimeslots(request_body)

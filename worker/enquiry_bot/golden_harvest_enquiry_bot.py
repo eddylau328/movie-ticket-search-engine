@@ -42,12 +42,15 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
         async def get_available_dates(session, url) -> List[str]:
             time_select_xpath = '//*[@id="time-select"]'
             dates = []
+            hk_zone = pytz.timezone('Asia/Hong_Kong')
+            current_date = datetime.now(hk_zone).date().strftime('%Y-%m-%d')
             async with session.get(detail_url) as resp:
                 text = await resp.read()
                 soup = BeautifulSoup(text.decode('utf-8'), 'html.parser')
                 dom = etree.HTML(str(soup))
                 for option in dom.xpath(time_select_xpath)[0].getchildren():
-                    dates.append(option.get('value'))
+                    if current_date == option.get('value'):
+                        dates.append(option.get('value'))
             return dates
 
         async def get_timeslots(session, date, url) -> Tuple[List[MovieTimeslot], List[str]]:

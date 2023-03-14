@@ -39,7 +39,6 @@ class EnquiryClient:
         """
         Client function to call the rpc for getMovieTimeslots
         """
-        print('testings')
         request_body = pb2.GetMovieTimeslotsRequest(**kwargs)
         return self.stub.getMovieTimeslots(request_body)
 
