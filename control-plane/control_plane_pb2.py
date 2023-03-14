@@ -13,43 +13,37 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x13\x63ontrol-plane.proto\"\x8c\x01\n\x06\x43inema\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1b\n\x08provider\x18\x03 \x01(\x0e\x32\t.Provider\x12\x0f\n\x07\x61\x64\x64ress\x18\x04 \x01(\t\x12\x1d\n\tterritory\x18\x05 \x01(\x0e\x32\n.Territory\x12\x1b\n\x08\x64istrict\x18\x06 \x01(\x0e\x32\t.District\"!\n\x05Movie\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\"\x92\x01\n\rMovieTimeslot\x12\r\n\x05start\x18\x01 \x01(\t\x12\r\n\x05price\x18\x02 \x01(\x02\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12\r\n\x05house\x18\x04 \x01(\t\x12\x11\n\tcinema_id\x18\x05 \x01(\t\x12\x13\n\x0b\x63inema_name\x18\x06 \x01(\t\x12\x1b\n\x08provider\x18\x07 \x01(\x0e\x32\t.Provider\"\x8b\x01\n\x0bMovieDetail\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1b\n\x08provider\x18\x03 \x01(\x0e\x32\t.Provider\x12\x10\n\x08\x64uration\x18\x04 \x01(\x05\x12\x0c\n\x04rate\x18\x05 \x01(\t\x12\x10\n\x08language\x18\x06 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x07 \x01(\t\"\x81\x01\n\x1cGetAvailableMovieListRequest\x12\x16\n\tcinema_id\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\'\n\x0f\x63inema_provider\x18\x02 \x01(\x0e\x32\t.ProviderH\x01\x88\x01\x01\x42\x0c\n\n_cinema_idB\x12\n\x10_cinema_provider\";\n\x1dGetAvailableMovieListResponse\x12\x1a\n\nmovie_list\x18\x01 \x03(\x0b\x32\x06.Movie\",\n\x16GetMovieDetailsRequest\x12\x12\n\nmovie_name\x18\x01 \x01(\t\"\x16\n\x14GetCinemaListRequest\"5\n\x15GetCinemaListResponse\x12\x1c\n\x0b\x63inema_list\x18\x01 \x03(\x0b\x32\x07.Cinema\"\x95\x01\n\x18GetMovieTimeslotsRequest\x12\x12\n\nmovie_name\x18\x01 \x01(\t\x12\x11\n\tprice_lte\x18\x02 \x01(\x02\x12\x11\n\tprice_gte\x18\x03 \x01(\x02\x12\x10\n\x08time_lte\x18\x04 \x01(\t\x12\x10\n\x08time_gte\x18\x05 \x01(\t\x12\x1b\n\x08\x64istrict\x18\x06 \x01(\x0e\x32\t.District\"D\n\x19GetMovieTimeslotsResponse\x12\'\n\x0fmovie_timeslots\x18\x01 \x03(\x0b\x32\x0e.MovieTimeslot*\'\n\x08Provider\x12\x07\n\x03MCL\x10\x00\x12\x12\n\x0eGOLDEN_HARVEST\x10\x01*\x9f\x02\n\x08\x44istrict\x12\x0b\n\x07ISLANDS\x10\x00\x12\x0e\n\nKWAI_TSING\x10\x01\x12\t\n\x05NORTH\x10\x02\x12\x0c\n\x08SAI_KUNG\x10\x03\x12\x0b\n\x07SHA_TIN\x10\x04\x12\n\n\x06TAI_PO\x10\x05\x12\r\n\tTSUEN_WAN\x10\x06\x12\x0c\n\x08TUEN_MUN\x10\x07\x12\r\n\tYUEN_LONG\x10\x08\x12\x10\n\x0cKOWLOON_CITY\x10\t\x12\r\n\tKWUN_TONG\x10\n\x12\x10\n\x0cSHAM_SHUI_PO\x10\x0b\x12\x10\n\x0cWONG_TAI_SIN\x10\x0c\x12\x11\n\rYAU_TSIM_MONG\x10\r\x12\x17\n\x13\x43\x45NTRAL_AND_WESTERN\x10\x0e\x12\x0b\n\x07\x45\x41STERN\x10\x0f\x12\x0c\n\x08SOUTHERN\x10\x10\x12\x0c\n\x08WAN_CHAI\x10\x11*C\n\tTerritory\x12\x0b\n\x07KOWLOON\x10\x00\x12\x13\n\x0fNEW_TERRITORIES\x10\x01\x12\x14\n\x10HONG_KONG_ISLAND\x10\x02\x32\xb3\x02\n\x0c\x43ontrolPlane\x12X\n\x15getAvailableMovieList\x12\x1d.GetAvailableMovieListRequest\x1a\x1e.GetAvailableMovieListResponse\"\x00\x12\x39\n\x0egetMovieDetail\x12\x17.GetMovieDetailsRequest\x1a\x0c.MovieDetail\"\x00\x12@\n\rgetCinemaList\x12\x15.GetCinemaListRequest\x1a\x16.GetCinemaListResponse\"\x00\x12L\n\x11getMovieTimeslots\x12\x19.GetMovieTimeslotsRequest\x1a\x1a.GetMovieTimeslotsResponse\"\x00\x32\xb1\x02\n\nEnquiryBot\x12X\n\x15getAvailableMovieList\x12\x1d.GetAvailableMovieListRequest\x1a\x1e.GetAvailableMovieListResponse\"\x00\x12\x39\n\x0egetMovieDetail\x12\x17.GetMovieDetailsRequest\x1a\x0c.MovieDetail\"\x00\x12@\n\rgetCinemaList\x12\x15.GetCinemaListRequest\x1a\x16.GetCinemaListResponse\"\x00\x12L\n\x11getMovieTimeslots\x12\x19.GetMovieTimeslotsRequest\x1a\x1a.GetMovieTimeslotsResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x13\x63ontrol-plane.proto\"j\n\x06\x43inema\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08provider\x18\x03 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x04 \x01(\t\x12\x11\n\tterritory\x18\x05 \x01(\t\x12\x10\n\x08\x64istrict\x18\x06 \x01(\t\"!\n\x05Movie\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\"v\n\rMovieTimeslot\x12\r\n\x05start\x18\x01 \x01(\t\x12\r\n\x05price\x18\x02 \x01(\x02\x12\r\n\x05house\x18\x03 \x01(\t\x12\x11\n\tcinema_id\x18\x04 \x01(\t\x12\x13\n\x0b\x63inema_name\x18\x05 \x01(\t\x12\x10\n\x08provider\x18\x06 \x01(\t\"\x80\x01\n\x0bMovieDetail\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08provider\x18\x03 \x01(\t\x12\x10\n\x08\x64uration\x18\x04 \x01(\x05\x12\x0c\n\x04rate\x18\x05 \x01(\t\x12\x10\n\x08language\x18\x06 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x07 \x01(\t\"v\n\x1cGetAvailableMovieListRequest\x12\x16\n\tcinema_id\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\x1c\n\x0f\x63inema_provider\x18\x02 \x01(\tH\x01\x88\x01\x01\x42\x0c\n\n_cinema_idB\x12\n\x10_cinema_provider\";\n\x1dGetAvailableMovieListResponse\x12\x1a\n\nmovie_list\x18\x01 \x03(\x0b\x32\x06.Movie\",\n\x16GetMovieDetailsRequest\x12\x12\n\nmovie_name\x18\x01 \x01(\t\"\x16\n\x14GetCinemaListRequest\"5\n\x15GetCinemaListResponse\x12\x1c\n\x0b\x63inema_list\x18\x01 \x03(\x0b\x32\x07.Cinema\"\x8a\x01\n\x18GetMovieTimeslotsRequest\x12\x12\n\nmovie_name\x18\x01 \x01(\t\x12\x11\n\tprice_lte\x18\x02 \x01(\x02\x12\x11\n\tprice_gte\x18\x03 \x01(\x02\x12\x10\n\x08time_lte\x18\x04 \x01(\t\x12\x10\n\x08time_gte\x18\x05 \x01(\t\x12\x10\n\x08\x64istrict\x18\x06 \x01(\t\"D\n\x19GetMovieTimeslotsResponse\x12\'\n\x0fmovie_timeslots\x18\x01 \x03(\x0b\x32\x0e.MovieTimeslot2\xb3\x02\n\x0c\x43ontrolPlane\x12X\n\x15getAvailableMovieList\x12\x1d.GetAvailableMovieListRequest\x1a\x1e.GetAvailableMovieListResponse\"\x00\x12\x39\n\x0egetMovieDetail\x12\x17.GetMovieDetailsRequest\x1a\x0c.MovieDetail\"\x00\x12@\n\rgetCinemaList\x12\x15.GetCinemaListRequest\x1a\x16.GetCinemaListResponse\"\x00\x12L\n\x11getMovieTimeslots\x12\x19.GetMovieTimeslotsRequest\x1a\x1a.GetMovieTimeslotsResponse\"\x00\x32\xb1\x02\n\nEnquiryBot\x12X\n\x15getAvailableMovieList\x12\x1d.GetAvailableMovieListRequest\x1a\x1e.GetAvailableMovieListResponse\"\x00\x12\x39\n\x0egetMovieDetail\x12\x17.GetMovieDetailsRequest\x1a\x0c.MovieDetail\"\x00\x12@\n\rgetCinemaList\x12\x15.GetCinemaListRequest\x1a\x16.GetCinemaListResponse\"\x00\x12L\n\x11getMovieTimeslots\x12\x19.GetMovieTimeslotsRequest\x1a\x1a.GetMovieTimeslotsResponse\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'control_plane_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _PROVIDER._serialized_start=1032
-  _PROVIDER._serialized_end=1071
-  _DISTRICT._serialized_start=1074
-  _DISTRICT._serialized_end=1361
-  _TERRITORY._serialized_start=1363
-  _TERRITORY._serialized_end=1430
-  _CINEMA._serialized_start=24
-  _CINEMA._serialized_end=164
-  _MOVIE._serialized_start=166
-  _MOVIE._serialized_end=199
-  _MOVIETIMESLOT._serialized_start=202
-  _MOVIETIMESLOT._serialized_end=348
-  _MOVIEDETAIL._serialized_start=351
-  _MOVIEDETAIL._serialized_end=490
-  _GETAVAILABLEMOVIELISTREQUEST._serialized_start=493
-  _GETAVAILABLEMOVIELISTREQUEST._serialized_end=622
-  _GETAVAILABLEMOVIELISTRESPONSE._serialized_start=624
-  _GETAVAILABLEMOVIELISTRESPONSE._serialized_end=683
-  _GETMOVIEDETAILSREQUEST._serialized_start=685
-  _GETMOVIEDETAILSREQUEST._serialized_end=729
-  _GETCINEMALISTREQUEST._serialized_start=731
-  _GETCINEMALISTREQUEST._serialized_end=753
-  _GETCINEMALISTRESPONSE._serialized_start=755
-  _GETCINEMALISTRESPONSE._serialized_end=808
-  _GETMOVIETIMESLOTSREQUEST._serialized_start=811
-  _GETMOVIETIMESLOTSREQUEST._serialized_end=960
-  _GETMOVIETIMESLOTSRESPONSE._serialized_start=962
-  _GETMOVIETIMESLOTSRESPONSE._serialized_end=1030
-  _CONTROLPLANE._serialized_start=1433
-  _CONTROLPLANE._serialized_end=1740
-  _ENQUIRYBOT._serialized_start=1743
-  _ENQUIRYBOT._serialized_end=2048
+  _CINEMA._serialized_start=23
+  _CINEMA._serialized_end=129
+  _MOVIE._serialized_start=131
+  _MOVIE._serialized_end=164
+  _MOVIETIMESLOT._serialized_start=166
+  _MOVIETIMESLOT._serialized_end=284
+  _MOVIEDETAIL._serialized_start=287
+  _MOVIEDETAIL._serialized_end=415
+  _GETAVAILABLEMOVIELISTREQUEST._serialized_start=417
+  _GETAVAILABLEMOVIELISTREQUEST._serialized_end=535
+  _GETAVAILABLEMOVIELISTRESPONSE._serialized_start=537
+  _GETAVAILABLEMOVIELISTRESPONSE._serialized_end=596
+  _GETMOVIEDETAILSREQUEST._serialized_start=598
+  _GETMOVIEDETAILSREQUEST._serialized_end=642
+  _GETCINEMALISTREQUEST._serialized_start=644
+  _GETCINEMALISTREQUEST._serialized_end=666
+  _GETCINEMALISTRESPONSE._serialized_start=668
+  _GETCINEMALISTRESPONSE._serialized_end=721
+  _GETMOVIETIMESLOTSREQUEST._serialized_start=724
+  _GETMOVIETIMESLOTSREQUEST._serialized_end=862
+  _GETMOVIETIMESLOTSRESPONSE._serialized_start=864
+  _GETMOVIETIMESLOTSRESPONSE._serialized_end=932
+  _CONTROLPLANE._serialized_start=935
+  _CONTROLPLANE._serialized_end=1242
+  _ENQUIRYBOT._serialized_start=1245
+  _ENQUIRYBOT._serialized_end=1550
 # @@protoc_insertion_point(module_scope)

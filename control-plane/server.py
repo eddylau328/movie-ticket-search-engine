@@ -50,11 +50,10 @@ class ControlPlaneService(pb2_grpc.ControlPlaneServicer):
         request,
         context
     ) -> List[Cinema]:
-        groups = [
-            bot.getCinemaList()
+        results = list(itertools.chain.from_iterable([
+            bot.getCinemaList().cinema_list
             for bot in self.provider_bots
-        ]
-        results = list(itertools.chain.from_iterable(groups))
+        ]))
         return pb2.GetCinemaListResponse(
             cinema_list=results,
         )
@@ -64,22 +63,12 @@ class ControlPlaneService(pb2_grpc.ControlPlaneServicer):
         request,
         context
     ) -> List[MovieTimeslot]:
-        results = []
-        for bot in self.provider_bots:
-            response = bot.getMovieTimeslots(
+        results = list(itertools.chain.from_iterable([
+            bot.getMovieTimeslots(
                 movie_name=request.movie_name
-            )
-            results += response.movie_timeslots
-        results = [
-            pb2.MovieTimeslot(
-                start=timeslot.start,
-                price=timeslot.price,
-                house=timeslot.house,
-                cinema_id=timeslot.cinema_id,
-                cinema_name=timeslot.cinema_name,
-            ) for timeslot in results
-        ]
-        print(results[0])
+            ).movie_timeslots
+            for bot in self.provider_bots
+        ]))
         return pb2.GetMovieTimeslotsResponse(
             movie_timeslots=results,
         )

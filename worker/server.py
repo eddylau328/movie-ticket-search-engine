@@ -43,16 +43,7 @@ class EnquiryBotService(pb2_grpc.EnquiryBotServicer):
         context,
     ) -> List[Cinema]:
         cinemas = asyncio.run(self.bot.getCinemaList())
-        results = [
-            pb2.Cinema(
-                id=cinema.id,
-                name=cinema.name,
-                provider=Provider.map_proto_enum(cinema.provider),
-                address=cinema.address,
-                territory=Territory.map_proto_enum(cinema.territory),
-                district=District.map_proto_enum(cinema.district),
-            ) for cinema in cinemas
-        ]
+        results = [cinema.proto() for cinema in cinemas]
         return pb2.GetCinemaListResponse(
             cinema_list=results,
         )
@@ -62,10 +53,9 @@ class EnquiryBotService(pb2_grpc.EnquiryBotServicer):
         request,
         context,
     ) -> List[MovieTimeslot]:
-        print(request.movie_name)
         timeslots = asyncio.run(self.bot.getMovieTimeslots(request.movie_name))
-        print(timeslots)
         results = [timeslot.proto() for timeslot in timeslots]
+        print(results)
         return pb2.GetMovieTimeslotsResponse(
             movie_timeslots=results
         )

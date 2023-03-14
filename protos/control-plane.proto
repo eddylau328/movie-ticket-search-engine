@@ -1,44 +1,13 @@
 syntax = "proto3";
 
-enum Provider {
-  MCL = 0;
-  GOLDEN_HARVEST = 1;
-}
-
-enum District {
-  ISLANDS = 0;
-  KWAI_TSING = 1;
-  NORTH = 2;
-  SAI_KUNG = 3;
-  SHA_TIN = 4;
-  TAI_PO = 5;
-  TSUEN_WAN = 6;
-  TUEN_MUN = 7;
-  YUEN_LONG = 8;
-  KOWLOON_CITY = 9;
-  KWUN_TONG = 10;
-  SHAM_SHUI_PO = 11;
-  WONG_TAI_SIN = 12;
-  YAU_TSIM_MONG = 13;
-  CENTRAL_AND_WESTERN = 14;
-  EASTERN = 15;
-  SOUTHERN = 16;
-  WAN_CHAI = 17;
-}
-
-enum Territory {
-  KOWLOON = 0;
-  NEW_TERRITORIES = 1;
-  HONG_KONG_ISLAND = 2;
-}
 
 message Cinema {
   string id = 1;
   string name = 2;
-  Provider provider = 3;
+  string provider = 3;
   string address = 4;
-  Territory territory = 5;
-  District district = 6;
+  string territory = 5;
+  string district = 6;
 }
 
 message Movie {
@@ -49,17 +18,16 @@ message Movie {
 message MovieTimeslot {
   string start = 1;
   float price = 2;
-  string address = 3;
-  string house = 4;
-  string cinema_id = 5;
-  string cinema_name = 6;
-  Provider provider = 7;
+  string house = 3;
+  string cinema_id = 4;
+  string cinema_name = 5;
+  string provider = 6;
 }
 
 message MovieDetail {
   string id = 1;
   string name = 2;
-  Provider provider = 3;
+  string provider = 3;
   int32 duration = 4;
   string rate = 5;
   string language = 6;
@@ -82,7 +50,7 @@ service EnquiryBot {
 
 message GetAvailableMovieListRequest {
   optional string cinema_id = 1;
-  optional Provider cinema_provider = 2;
+  optional string cinema_provider = 2;
 }
 
 message GetAvailableMovieListResponse {
@@ -105,7 +73,7 @@ message GetMovieTimeslotsRequest {
   float price_gte = 3;
   string time_lte = 4;
   string time_gte = 5;
-  District district = 6;
+  string district = 6;
 }
 
 message GetMovieTimeslotsResponse {
