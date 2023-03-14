@@ -4,8 +4,13 @@ import {
   fetchMovieDetail,
   fetchMovies,
   fetchMovieTimeslots,
-} from "../fetch";
-import { IMovie, ICinema, IMovieTimeslot } from "../types/data.type";
+} from "../fetch/client";
+import {
+  IMovie,
+  ICinema,
+  IMovieTimeslot,
+  IMovieDetail,
+} from "../types/data.type";
 
 export function useMovies() {
   const [movies, setMovies] = useState<IMovie[]>([]);
@@ -18,7 +23,7 @@ export function useMovies() {
 }
 
 export function useMovieDetails(name: string) {
-  const [movie, setMovie] = useState<IMovie>();
+  const [movie, setMovie] = useState<IMovieDetail>();
 
   useEffect(() => {
     fetchMovieDetail(name).then((res) => setMovie(res.data));
