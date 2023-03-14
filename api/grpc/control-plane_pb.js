@@ -548,9 +548,7 @@ proto.Movie.prototype.toObject = function(opt_includeInstance) {
  */
 proto.Movie.toObject = function(includeInstance, msg) {
   var f, obj = {
-    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    provider: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    name: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -589,15 +587,7 @@ proto.Movie.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setId(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
       msg.setName(value);
-      break;
-    case 3:
-      var value = /** @type {!proto.Provider} */ (reader.readEnum());
-      msg.setProvider(value);
       break;
     default:
       reader.skipField();
@@ -628,24 +618,10 @@ proto.Movie.prototype.serializeBinary = function() {
  */
 proto.Movie.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getId();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
   f = message.getName();
   if (f.length > 0) {
     writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getProvider();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      3,
+      1,
       f
     );
   }
@@ -653,10 +629,10 @@ proto.Movie.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string id = 1;
+ * optional string name = 1;
  * @return {string}
  */
-proto.Movie.prototype.getId = function() {
+proto.Movie.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -665,44 +641,8 @@ proto.Movie.prototype.getId = function() {
  * @param {string} value
  * @return {!proto.Movie} returns this
  */
-proto.Movie.prototype.setId = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string name = 2;
- * @return {string}
- */
-proto.Movie.prototype.getName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.Movie} returns this
- */
 proto.Movie.prototype.setName = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional Provider provider = 3;
- * @return {!proto.Provider}
- */
-proto.Movie.prototype.getProvider = function() {
-  return /** @type {!proto.Provider} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
-};
-
-
-/**
- * @param {!proto.Provider} value
- * @return {!proto.Movie} returns this
- */
-proto.Movie.prototype.setProvider = function(value) {
-  return jspb.Message.setProto3EnumField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 

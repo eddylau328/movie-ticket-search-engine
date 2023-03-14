@@ -9,9 +9,9 @@ import {
   Stack,
 } from "@mantine/core";
 import { useParams } from "react-router-dom";
-import { getMovieUrl } from "../fetch/tmdb";
+import { getMovieUrl } from "../fetch/client";
 import { useMovieDetails, useTimeslots } from "../hooks/client";
-import { useTmdbMovie } from "../hooks/tmdb";
+import { useTmdbMovie } from "../hooks/client";
 import { IMovieTimeslot } from "../types/data.type";
 
 const mockMovieTimeslots = [

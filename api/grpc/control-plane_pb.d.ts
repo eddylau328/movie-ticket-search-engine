@@ -40,14 +40,8 @@ export namespace Cinema {
 }
 
 export class Movie extends jspb.Message {
-  getId(): string;
-  setId(value: string): void;
-
   getName(): string;
   setName(value: string): void;
-
-  getProvider(): ProviderMap[keyof ProviderMap];
-  setProvider(value: ProviderMap[keyof ProviderMap]): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Movie.AsObject;
@@ -61,9 +55,7 @@ export class Movie extends jspb.Message {
 
 export namespace Movie {
   export type AsObject = {
-    id: string,
     name: string,
-    provider: ProviderMap[keyof ProviderMap],
   }
 }
 

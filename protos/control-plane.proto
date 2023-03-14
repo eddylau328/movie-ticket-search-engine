@@ -40,9 +40,7 @@ message Cinema {
 }
 
 message Movie {
-  string id = 1;
-  string name = 2;
-  Provider provider = 3;
+  string name = 1;
 }
 
 message MovieTimeslot {
