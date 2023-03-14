@@ -44,7 +44,7 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
             dates = []
             hk_zone = pytz.timezone('Asia/Hong_Kong')
             current_date = datetime.now(hk_zone).date().strftime('%Y-%m-%d')
-            async with session.get(detail_url) as resp:
+            async with session.get(url) as resp:
                 text = await resp.read()
                 soup = BeautifulSoup(text.decode('utf-8'), 'html.parser')
                 dom = etree.HTML(str(soup))
@@ -109,6 +109,7 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
                             cinema_name=cinema_name,
                             provider=self.provider,
                             house=house,
+                            movie_name=''
                         ))
                         price_urls.append(price_base_template_url.safe_substitute(
                             film_show_id=anchor.get('href').split(
@@ -117,31 +118,32 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
 
             return timeslots, price_urls
 
-        # date yyyy-mm-dd
-        detail_page_url_template = Template(
-            'https://www.goldenharvest.com/film/detail?film_id=$movie_id'
-        )
-        timeslot_query_url_template = Template(
-            'https://www.goldenharvest.com//film/ajaxFilmShow?film_id=$movie_id&date=$date'
-        )
         movie_list = await self.getAvailableMovieList()
-        movie_id = None
+        movies = []
         for movie in movie_list:
-            if movie.name == movie_name:
-                movie_id = movie.id
-        if not movie_id:
+            if movie_name in movie.name:
+                movies.append(movie)
+        if len(movies) == 0:
             return []
 
-        async with aiohttp.ClientSession() as session:
+        async def get_individual(session, movie: Movie):
+            # date yyyy-mm-dd
+            detail_page_url_template = Template(
+                'https://www.goldenharvest.com/film/detail?film_id=$movie_id'
+            )
+            timeslot_query_url_template = Template(
+                'https://www.goldenharvest.com//film/ajaxFilmShow?film_id=$movie_id&date=$date'
+            )
             detail_url = detail_page_url_template.safe_substitute(
-                movie_id=movie_id)
+                movie_id=movie.id
+            )
             dates = await get_available_dates(session, detail_url)
             results = await asyncio.gather(*[
                 get_timeslots(
                     session,
                     date,
                     timeslot_query_url_template.safe_substitute(
-                        movie_id=movie_id,
+                        movie_id=movie.id,
                         date=date,
                     ),
                 ) for date in dates
@@ -153,7 +155,13 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
             prices = await asyncio.gather(*[get_price(session, price_url) for price_url in price_urls])
             for i, price in enumerate(prices):
                 timeslots[i].price = price
+                timeslots[i].movie_name = movie.name
             return timeslots
+
+        async with aiohttp.ClientSession() as session:
+            results = await asyncio.gather(*[get_individual(session, movie) for movie in movies])
+
+        return list(itertools.chain.from_iterable(results))
 
     async def getAvailableMovieList(self, **kwargs) -> List[Movie]:
         template_url = Template(

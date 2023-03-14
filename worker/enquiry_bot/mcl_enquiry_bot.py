@@ -1,6 +1,7 @@
 from typing import List
 from datetime import datetime
 from string import Template
+import itertools
 
 from common import (
     Cinema,
@@ -14,6 +15,7 @@ from common import (
 
 import aiohttp
 import pytz
+import asyncio
 
 
 class MCLEnquiryBot(EnquiryBot):
@@ -53,17 +55,18 @@ class MCLEnquiryBot(EnquiryBot):
         **kwargs,
     ) -> List[MovieTimeslot]:
         movie_list = await self.getAvailableMovieList()
-        movie_id = None
+        movies = []
         for movie in movie_list:
-            if movie.name == movie_name:
-                movie_id = movie.id
-        if not movie_id:
+            if movie_name in movie.name:
+                movies.append(movie)
+        if len(movies) == 0:
             return []
-        async with aiohttp.ClientSession() as session:
+
+        async def get_individual(session, movie: Movie):
             template_url = Template(
                 'https://www.mclcinema.com/MCLWebAPI2/GetShowDays.aspx?l=1&t=s&id=$movie_id'
             )
-            url = template_url.safe_substitute(movie_id=movie_id)
+            url = template_url.safe_substitute(movie_id=movie.id)
             timeslots = []
             async with session.get(url) as resp:
                 result = await resp.json(content_type='text/html')
@@ -93,9 +96,14 @@ class MCLEnquiryBot(EnquiryBot):
                                     cinema_name=cinema_name,
                                     house=house.strip(),
                                     provider=self.provider,
+                                    movie_name=movie.name,
                                 )
                             )
                 return timeslots
+
+        async with aiohttp.ClientSession() as session:
+            results = await asyncio.gather(*[get_individual(session, movie) for movie in movies])
+        return list(itertools.chain.from_iterable(results))
 
     @property
     def provider(self) -> Provider:

@@ -451,6 +451,7 @@ class MovieTimeslot:
     cinema_name: str
     provider: Provider
     house: str
+    movie_name: str
 
     def dict(self) -> Dict[str, str]:
         res = asdict(self)
@@ -466,6 +467,7 @@ class MovieTimeslot:
             cinema_name=self.cinema_name,
             provider=self.provider.value,
             house=self.house,
+            movie_name=self.movie_name,
         )
 
 

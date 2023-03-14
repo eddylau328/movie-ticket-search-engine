@@ -35,3 +35,16 @@ if __name__ == '__main__':
     server.add_insecure_port('[::]:50051')
     server.start()
     server.wait_for_termination()
+
+
+# if __name__ == '__main__':
+#     import pprint
+#     import argparse
+#     import asyncio
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument(
+#         'movie', type=str, help=f'An string for identifing which bot to instantiate')
+#     args = parser.parse_args()
+#     bot = enquiry_bot.GoldenHarvestEnquiryBot()
+#     results = asyncio.run(bot.getMovieTimeslots(movie_name=args.movie))
+#     pprint.pprint(results)

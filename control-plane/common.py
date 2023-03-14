@@ -68,6 +68,7 @@ class MovieTimeslot:
     cinema_name: str
     provider: Provider
     house: str
+    movie_name: str
 
 
 class EnquiryBotInterface:

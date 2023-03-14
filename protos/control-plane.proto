@@ -22,6 +22,7 @@ message MovieTimeslot {
   string cinema_id = 4;
   string cinema_name = 5;
   string provider = 6;
+  string movie_name = 7;
 }
 
 message MovieDetail {
