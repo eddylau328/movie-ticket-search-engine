@@ -1,6 +1,6 @@
 import grpc
-import worker_pb2_grpc as pb2_grpc
-import worker_pb2 as pb2
+import control_plane_pb2_grpc as pb2_grpc
+import control_plane_pb2 as pb2
 
 
 class EnquiryBotClient:

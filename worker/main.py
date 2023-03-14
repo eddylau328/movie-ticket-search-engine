@@ -5,7 +5,7 @@ import argparse
 from common import Provider
 from server import EnquiryBotService
 import enquiry_bot
-import worker_pb2_grpc as pb2_grpc
+import control_plane_pb2_grpc as pb2_grpc
 
 import grpc
 
