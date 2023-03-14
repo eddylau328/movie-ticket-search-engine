@@ -1,7 +1,7 @@
 import { ControlPlaneClient } from "../grpc/control-plane_grpc_pb";
 import { credentials, Metadata, ServiceError } from "@grpc/grpc-js";
 
-const address = "localhost:50051";
+const address = process.env.CONTROL_PLANE_ADDRESS ?? "localhost:50051";
 const client = new ControlPlaneClient(address, credentials.createInsecure());
 client.waitForReady(Date.now() + 5000, (error?: Error) => {
   if (error) {
