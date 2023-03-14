@@ -126,8 +126,8 @@ classDiagram
 
 # Demo
 ![image](https://user-images.githubusercontent.com/48463449/225113172-4e658257-6cf8-4bd7-a148-76de6418ba7e.png)
-![image](https://user-images.githubusercontent.com/48463449/225113899-e4e3043e-d299-49e8-912d-d83285da80bc.png)
-![image](https://user-images.githubusercontent.com/48463449/225113973-6664125f-563a-40bd-bd22-7631c4ddbbd7.png)
+![image](https://user-images.githubusercontent.com/48463449/225114647-94a71b98-f6b6-4180-a80f-87bcaaa9e60a.png)
+![image](https://user-images.githubusercontent.com/48463449/225114692-811135e5-a38c-46ed-ac8f-ba020d4abc41.png)
 
 
 
