@@ -32,18 +32,21 @@ class EnquiryClient:
         """
         Client function to call the rpc for getCinemaList
         """
-        request_body = pb2.GetCinemaListRequest()
-        return self.stub.getCinemaList()
+        request = pb2.GetCinemaListRequest()
+        return self.stub.getCinemaList(request)
 
     def getMovieTimeslots(self, **kwargs):
         """
         Client function to call the rpc for getMovieTimeslots
         """
+        print('testings')
         request_body = pb2.GetMovieTimeslotsRequest(**kwargs)
-        return self.stub.getCinemaList(request_body)
+        return self.stub.getMovieTimeslots(request_body)
 
 
 if __name__ == '__main__':
     client = EnquiryClient()
-    result = client.getCinemaList()
+    # result = client.getCinemaList()
+    # print(result)
+    result = client.getMovieTimeslots(movie_name='鈴芽之旅')
     print(result)

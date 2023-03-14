@@ -8,6 +8,9 @@ from common import (
     MovieDetail,
     MovieTimeslot,
     Cinema,
+    Provider,
+    Territory,
+    District,
 )
 
 import asyncio
@@ -39,15 +42,30 @@ class EnquiryBotService(pb2_grpc.EnquiryBotServicer):
         request,
         context,
     ) -> List[Cinema]:
-        print('testings')
-        results = asyncio.run(self.bot.getCinemaList())
-        print(results)
-        return pb2.GetCinemaListResponse([])
+        cinemas = asyncio.run(self.bot.getCinemaList())
+        results = [
+            pb2.Cinema(
+                id=cinema.id,
+                name=cinema.name,
+                provider=Provider.map_proto_enum(cinema.provider),
+                address=cinema.address,
+                territory=Territory.map_proto_enum(cinema.territory),
+                district=District.map_proto_enum(cinema.district),
+            ) for cinema in cinemas
+        ]
+        return pb2.GetCinemaListResponse(
+            cinema_list=results,
+        )
 
     def getMovieTimeslots(
         self,
         request,
         context,
     ) -> List[MovieTimeslot]:
-        results = asyncio.run(self.bot.getMovieTimeslots(request.movie_name))
-        return pb2.GetMovieTimeslotsResponse(results)
+        print(request.movie_name)
+        timeslots = asyncio.run(self.bot.getMovieTimeslots(request.movie_name))
+        print(timeslots)
+        results = [timeslot.proto() for timeslot in timeslots]
+        return pb2.GetMovieTimeslotsResponse(
+            movie_timeslots=results
+        )
