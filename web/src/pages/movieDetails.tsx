@@ -20,6 +20,7 @@ function Row(props: IMovieTimeslot) {
     <tr>
       <td>{props.movieName}</td>
       <td>{props.provider}</td>
+      <td>{props.cinemaName}</td>
       <td>{props.house}</td>
       <td>{props.start}</td>
       <td>{props.price} HKD</td>
@@ -67,6 +68,7 @@ export default function MovieDetailsPage() {
             <tr>
               <th>movie name</th>
               <th>provider</th>
+              <th>cinema</th>
               <th>house</th>
               <th>time</th>
               <th>price</th>
