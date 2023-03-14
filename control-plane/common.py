@@ -77,7 +77,7 @@ class EnquiryBotInterface:
         """
         raise NotImplementedError
 
-    async def getMovieTimeslots(self, movie_id: str, **kwargs) -> List[MovieTimeslot]:
+    async def getMovieTimeslots(self, movie_name: str, **kwargs) -> List[MovieTimeslot]:
         """
         Provide timeslots of that day in different places
 
@@ -100,7 +100,7 @@ class EnquiryBotInterface:
         """
         raise NotImplementedError
 
-    async def getCinemaList(self) -> List[Cinema]:
+    def getCinemaList(self) -> List[Cinema]:
         """
         Provide a list of cinemas in Hong Kong
         """

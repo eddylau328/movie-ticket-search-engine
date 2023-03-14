@@ -50,11 +50,12 @@ class ControlPlaneService(pb2_grpc.ControlPlaneServicer):
         request,
         context
     ) -> List[Cinema]:
-        groups = asyncio.gather(*[
+        groups = [
             bot.getCinemaList()
             for bot in self.provider_bots
-        ])
-        results = list(itertools.chain.from_iterable(asyncio.run(groups)))
+        ]
+        print(groups)
+        results = list(itertools.chain.from_iterable(groups))
         return pb2.GetCinemaListResponse(results)
 
     def getMovieTimeslots(

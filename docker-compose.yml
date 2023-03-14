@@ -6,11 +6,15 @@ services:
       - 8000:8000
     environment:
       - CONTROL_PLANE_ADDRESS=control-plane:50051
+    depends_on:
+      - control-plane
   web:
     build:
       context: web
     ports:
       - 3000:3000
+    depends_on:
+      - api
   control-plane:
     build:
       context: control-plane
