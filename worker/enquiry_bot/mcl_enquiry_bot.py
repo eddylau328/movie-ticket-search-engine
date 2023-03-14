@@ -18,7 +18,7 @@ import pytz
 
 class MCLEnquiryBot(EnquiryBot):
 
-    async def get_available_movie_list(self) -> List[Movie]:
+    async def getAvailableMovieList(self) -> List[Movie]:
         async with aiohttp.ClientSession() as session:
             url = 'https://www.mclcinema.com/MCLWebAPI2/GetNCF.aspx?l=1'
             async with session.get(url) as resp:
@@ -30,7 +30,7 @@ class MCLEnquiryBot(EnquiryBot):
                     ) for m in result.get('n', {}).get('n', [])
                 ]
 
-    async def get_cinema_list(self) -> List[Cinema]:
+    async def getCinemaList(self) -> List[Cinema]:
         async with aiohttp.ClientSession() as session:
             url = 'https://www.mclcinema.com/MCLWebAPI2/GetCinemaDetails.aspx?l=1'
             async with session.get(url) as resp:
@@ -47,12 +47,12 @@ class MCLEnquiryBot(EnquiryBot):
                     for c in result
                 ]
 
-    async def get_movie_timeslots(
+    async def getMovieTimeslots(
         self,
         movie_name: str,
         **kwargs,
     ) -> List[MovieTimeslot]:
-        movie_list = await self.get_available_movie_list()
+        movie_list = await self.getAvailableMovieList()
         movie_id = None
         for movie in movie_list:
             if movie.name == movie_name:
