@@ -69,6 +69,13 @@ service ControlPlane {
   rpc getMovieTimeslots (GetMovieTimeslotsRequest) returns (GetMovieTimeslotsResponse) {}
 }
 
+service EnquiryBot {
+  rpc getAvailableMovieList (GetAvailableMovieListRequest) returns (GetAvailableMovieListResponse) {}
+  rpc getMovieDetail (GetMovieDetailsRequest) returns (MovieDetail) {}
+  rpc getCinemaList (GetCinemaListRequest) returns (GetCinemaListResponse) {}
+  rpc getMovieTimeslots (GetMovieTimeslotsRequest) returns (GetMovieTimeslotsResponse) {}
+}
+
 message GetAvailableMovieListRequest {
   optional string cinema_id = 1;
   optional Provider cinema_provider = 2;
