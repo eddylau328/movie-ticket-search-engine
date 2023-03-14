@@ -9,6 +9,7 @@ import {
   Transition,
   rem,
   Text,
+  Box,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
@@ -93,7 +94,8 @@ interface HeaderResponsiveProps {
 
 export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   const [opened, { toggle, close }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
+  const isActive = (link: string) =>
+    link ? window.location.pathname.includes(link) : true;
   const { classes, cx } = useStyles();
 
   const items = links.map((link) => (
@@ -101,11 +103,9 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
       key={link.label}
       href={link.link}
       className={cx(classes.link, {
-        [classes.linkActive]: active === link.link,
+        [classes.linkActive]: isActive(link.link),
       })}
       onClick={(event) => {
-        event.preventDefault();
-        setActive(link.link);
         close();
       }}
     >
@@ -148,10 +148,12 @@ export default function Layout(props: Props) {
       <HeaderResponsive
         links={[
           { link: "/movies", label: "Movies" },
-          { link: "/cinema", label: "Cinema" },
+          // { link: "/cinema", label: "Cinema" },
         ]}
       />
-      {props.children}
+      <Box mx={"auto"} sx={{ maxWidth: "1080px" }}>
+        {props.children}
+      </Box>
     </div>
   );
 }
