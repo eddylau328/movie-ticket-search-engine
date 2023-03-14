@@ -415,7 +415,7 @@ class EnquiryBot(ABC):
         """
         return None
 
-    async def get_movie_timeslots(self, movie_id: str, **kwargs) -> List[MovieTimeslot]:
+    async def get_movie_timeslots(self, movie_name: str, **kwargs) -> List[MovieTimeslot]:
         """
         Provide timeslots of that day in different places
 

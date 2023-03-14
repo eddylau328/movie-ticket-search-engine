@@ -23,7 +23,7 @@ import asyncio
 
 class GoldenHarvestEnquiryBot(EnquiryBot):
 
-    async def get_movie_timeslots(self, movie_id: str, **kwargs) -> List[MovieTimeslot]:
+    async def get_movie_timeslots(self, movie_name: str, **kwargs) -> List[MovieTimeslot]:
 
         async def get_price(session, price_url) -> List[float]:
             price_list_xpath = '/html/body/div[2]/div/p/u'
@@ -121,11 +121,18 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
         timeslot_query_url_template = Template(
             'https://www.goldenharvest.com//film/ajaxFilmShow?film_id=$movie_id&date=$date'
         )
+        movie_list = await self.get_available_movie_list()
+        movie_id = None
+        for movie in movie_list:
+            if movie.name == movie_name:
+                movie_id = movie.id
+        if not movie_id:
+            return []
+
         async with aiohttp.ClientSession() as session:
             detail_url = detail_page_url_template.safe_substitute(
                 movie_id=movie_id)
             dates = await get_available_dates(session, detail_url)
-
             results = await asyncio.gather(*[
                 get_timeslots(
                     session,

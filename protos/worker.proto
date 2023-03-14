@@ -62,7 +62,7 @@ message MovieDetail {
   string description = 7;
 }
 
-service ControlPlane {
+service EnquiryBot {
   rpc getAvailableMovieList (GetAvailableMovieListRequest) returns (GetAvailableMovieListResponse) {}
   rpc getMovieDetail (GetMovieDetailsRequest) returns (MovieDetail) {}
   rpc getCinemaList (GetCinemaListRequest) returns (GetCinemaListResponse) {}
@@ -79,7 +79,7 @@ message GetAvailableMovieListResponse {
 }
 
 message GetMovieDetailsRequest {
-  string movie_name = 1;
+  string id = 1;
 }
 
 message GetCinemaListRequest {}

@@ -1,9 +1,11 @@
 from enum import Enum
 from dataclasses import dataclass
+from typing import Optional, List
 
 
 class Provider(str, Enum):
     MCL = 'mcl-cinemas'
+    GOLDEN_HARVEST = 'golden-harvest'
 
 
 class District(str, Enum):
@@ -65,3 +67,41 @@ class MovieTimeslot:
     cinema_name: str
     provider: Provider
     house: str
+
+
+class EnquiryBotInterface:
+
+    async def getMovieDetails(self, id: str) -> Optional[MovieDetail]:
+        """
+        Provide description about the movie 
+        """
+        raise NotImplementedError
+
+    async def getMovieTimeslots(self, movie_id: str, **kwargs) -> List[MovieTimeslot]:
+        """
+        Provide timeslots of that day in different places
+
+        kwargs
+        - price_lte: float  # less than equal
+        - price_gte: float  # greater than equal
+        - time_lte: str     # less than equal
+        - time_gte: str     # greater than equal
+        - district: District
+        """
+        raise NotImplementedError
+
+    async def getAvailableMovieList(self, **kwargs) -> List[Movie]:
+        """
+        Provide list of movies that is available to watch
+
+        kwargs
+        - cinema_id         : need to provide for cinema_provider
+        - cinema_provider   : need to provide with cinema_id
+        """
+        raise NotImplementedError
+
+    async def getCinemaList(self) -> List[Cinema]:
+        """
+        Provide a list of cinemas in Hong Kong
+        """
+        raise NotImplementedError
