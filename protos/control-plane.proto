@@ -62,16 +62,16 @@ message MovieDetail {
   string description = 7;
 }
 
-service EnquiryBot {
+service ControlPlane {
   rpc getAvailableMovieList (GetAvailableMovieListRequest) returns (GetAvailableMovieListResponse) {}
-  rpc getMovieDetails (GetMovieDetailsRequest) returns (MovieDetail) {}
+  rpc getMovieDetail (GetMovieDetailsRequest) returns (MovieDetail) {}
   rpc getCinemaList (GetCinemaListRequest) returns (GetCinemaListResponse) {}
   rpc getMovieTimeslots (GetMovieTimeslotsRequest) returns (GetMovieTimeslotsResponse) {}
 }
 
 message GetAvailableMovieListRequest {
-  string cinema_id = 1;
-  Provider cinema_provider = 2;
+  optional string cinema_id = 1;
+  optional Provider cinema_provider = 2;
 }
 
 message GetAvailableMovieListResponse {
@@ -79,7 +79,7 @@ message GetAvailableMovieListResponse {
 }
 
 message GetMovieDetailsRequest {
-  string id = 1;
+  string movie_name = 1;
 }
 
 message GetCinemaListRequest {}
@@ -89,7 +89,7 @@ message GetCinemaListResponse {
 }
 
 message GetMovieTimeslotsRequest {
-  string id = 1;
+  string movie_name = 1;
   float price_lte = 2;
   float price_gte = 3;
   string time_lte = 4;
@@ -99,8 +99,4 @@ message GetMovieTimeslotsRequest {
 
 message GetMovieTimeslotsResponse {
   repeated MovieTimeslot movie_timeslots = 1;
-}
-
-message ProviderProperty {
-  Provider provider = 1;
 }

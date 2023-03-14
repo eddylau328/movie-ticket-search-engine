@@ -6,7 +6,11 @@
 		{
 			"path": "./worker",
 			"name": "worker"
-		}
+		},
+		{
+			"path": "./control-plane",
+			"name": "control-plane"
+		},	
 	],
 	"settings": {}
 }

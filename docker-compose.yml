@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: api
+    ports:
+      - 8000:8000
+    environment:
+      - CONTROL_PLANE_ADDRESS=control-plane:50051
+  web:
+    build:
+      context: web
+    ports:
+      - 3000:3000
+  control-plane:
+    build:
+      context: control-plane
+      target: runtime
+    ports:
+      - 50051:50051
