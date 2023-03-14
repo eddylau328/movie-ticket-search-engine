@@ -49,9 +49,16 @@ class MCLEnquiryBot(EnquiryBot):
 
     async def get_movie_timeslots(
         self,
-        movie_id: str,
+        movie_name: str,
         **kwargs,
     ) -> List[MovieTimeslot]:
+        movie_list = await self.get_available_movie_list()
+        movie_id = None
+        for movie in movie_list:
+            if movie.name == movie_name:
+                movie_id = movie.id
+        if not movie_id:
+            return []
         async with aiohttp.ClientSession() as session:
             template_url = Template(
                 'https://www.mclcinema.com/MCLWebAPI2/GetShowDays.aspx?l=1&t=s&id=$movie_id'
