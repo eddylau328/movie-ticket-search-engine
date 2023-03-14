@@ -8,6 +8,7 @@ from typing import Dict, List, Optional
 
 class Provider(str, Enum):
     MCL = 'mcl-cinemas'
+    GOLDEN_HARVEST = 'golden-harvest'
 
 
 class District(str, Enum):
@@ -58,7 +59,7 @@ class Territory(str, Enum):
 
 
 AREAS_MAP = {
-    Territory.NEW_TERRITORIES: {
+    Territory.HONG_KONG_ISLAND: {
         District.CENTRAL_AND_WESTERN: {
             'zh': [
                 '堅尼地城',
@@ -109,6 +110,7 @@ AREAS_MAP = {
                 '筲箕灣',
                 '柴灣',
                 '小西灣',
+                '筲箕灣',
             ],
             'en': [
                 'Tin Hau',
@@ -119,6 +121,7 @@ AREAS_MAP = {
                 'Shau Kei Wan',
                 'Chai Wan',
                 'Siu Sai Wan',
+                'Shau Kei Wan',
             ],
         },
         District.SOUTHERN: {
@@ -143,12 +146,14 @@ AREAS_MAP = {
             'zh': [
                 '尖沙咀', '油麻地',
                 '西九龍填海區',
+                '西九龍',
                 '京士柏', '旺角',
                 '大角咀',
             ],
             'en': [
                 'Tsim Sha Tsui', 'Yau Ma Tei',
                 'West Kowloon Reclamation',
+                'West Kowloon',
                 'King\'s Park', 'Mong Kok',
                 'Tai Kok Tsui',
             ],
@@ -160,6 +165,7 @@ AREAS_MAP = {
                 '深水埗', '石硤尾',
                 '又一村', '大窩坪',
                 '昂船洲',
+                '南昌',
             ],
             'en': [
                 'Mei Foo', 'Lai Chi Kok',
@@ -167,10 +173,12 @@ AREAS_MAP = {
                 'Sham Shui Po', 'Shek Kip Mei',
                 'Yau Yat Tsuen', 'Tai Wo Ping',
                 'Stonecutters Island',
+                'Nam Cheong',
             ],
         },
         District.KOWLOON_CITY: {
             'zh': [
+                '黃埔',
                 '紅磡', '土瓜灣',
                 '馬頭角', '馬頭圍',
                 '啟德', '九龍城',
@@ -178,6 +186,7 @@ AREAS_MAP = {
                 '筆架山',
             ],
             'en': [
+                'Whampoa'
                 'Hung Hom', 'To Kwa Wan',
                 'Ma Tau Kok', 'Ma Tau Wai',
                 'Kai Tak', 'Kowloon City',
