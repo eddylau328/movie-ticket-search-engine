@@ -4,12 +4,14 @@ import {
   fetchMovieDetail,
   fetchMovies,
   fetchMovieTimeslots,
+  searchMovie,
 } from "../fetch/client";
 import {
   IMovie,
   ICinema,
   IMovieTimeslot,
   IMovieDetail,
+  ITMDBMovie,
 } from "../types/data.type";
 
 export function useMovies() {
@@ -50,4 +52,14 @@ export function useTimeslots(name: string) {
   }, [name]);
 
   return timeslots;
+}
+
+export function useTmdbMovie(name: string) {
+  const [data, setData] = useState<ITMDBMovie>();
+
+  useEffect(() => {
+    searchMovie(name).then((data) => setData(data.data));
+  }, [name]);
+
+  return data;
 }

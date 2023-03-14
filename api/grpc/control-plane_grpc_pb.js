@@ -1,116 +1,101 @@
 // GENERATED CODE -- DO NOT EDIT!
 
-"use strict";
-var grpc = require("@grpc/grpc-js");
-var control$plane_pb = require("./control-plane_pb.js");
+'use strict';
+var grpc = require('@grpc/grpc-js');
+var control$plane_pb = require('./control-plane_pb.js');
 
 function serialize_GetAvailableMovieListRequest(arg) {
   if (!(arg instanceof control$plane_pb.GetAvailableMovieListRequest)) {
-    throw new Error("Expected argument of type GetAvailableMovieListRequest");
+    throw new Error('Expected argument of type GetAvailableMovieListRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_GetAvailableMovieListRequest(buffer_arg) {
-  return control$plane_pb.GetAvailableMovieListRequest.deserializeBinary(
-    new Uint8Array(buffer_arg)
-  );
+  return control$plane_pb.GetAvailableMovieListRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_GetAvailableMovieListResponse(arg) {
   if (!(arg instanceof control$plane_pb.GetAvailableMovieListResponse)) {
-    throw new Error("Expected argument of type GetAvailableMovieListResponse");
+    throw new Error('Expected argument of type GetAvailableMovieListResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_GetAvailableMovieListResponse(buffer_arg) {
-  return control$plane_pb.GetAvailableMovieListResponse.deserializeBinary(
-    new Uint8Array(buffer_arg)
-  );
+  return control$plane_pb.GetAvailableMovieListResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_GetCinemaListRequest(arg) {
   if (!(arg instanceof control$plane_pb.GetCinemaListRequest)) {
-    throw new Error("Expected argument of type GetCinemaListRequest");
+    throw new Error('Expected argument of type GetCinemaListRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_GetCinemaListRequest(buffer_arg) {
-  return control$plane_pb.GetCinemaListRequest.deserializeBinary(
-    new Uint8Array(buffer_arg)
-  );
+  return control$plane_pb.GetCinemaListRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_GetCinemaListResponse(arg) {
   if (!(arg instanceof control$plane_pb.GetCinemaListResponse)) {
-    throw new Error("Expected argument of type GetCinemaListResponse");
+    throw new Error('Expected argument of type GetCinemaListResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_GetCinemaListResponse(buffer_arg) {
-  return control$plane_pb.GetCinemaListResponse.deserializeBinary(
-    new Uint8Array(buffer_arg)
-  );
+  return control$plane_pb.GetCinemaListResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_GetMovieDetailsRequest(arg) {
   if (!(arg instanceof control$plane_pb.GetMovieDetailsRequest)) {
-    throw new Error("Expected argument of type GetMovieDetailsRequest");
+    throw new Error('Expected argument of type GetMovieDetailsRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_GetMovieDetailsRequest(buffer_arg) {
-  return control$plane_pb.GetMovieDetailsRequest.deserializeBinary(
-    new Uint8Array(buffer_arg)
-  );
+  return control$plane_pb.GetMovieDetailsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_GetMovieTimeslotsRequest(arg) {
   if (!(arg instanceof control$plane_pb.GetMovieTimeslotsRequest)) {
-    throw new Error("Expected argument of type GetMovieTimeslotsRequest");
+    throw new Error('Expected argument of type GetMovieTimeslotsRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_GetMovieTimeslotsRequest(buffer_arg) {
-  return control$plane_pb.GetMovieTimeslotsRequest.deserializeBinary(
-    new Uint8Array(buffer_arg)
-  );
+  return control$plane_pb.GetMovieTimeslotsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_GetMovieTimeslotsResponse(arg) {
   if (!(arg instanceof control$plane_pb.GetMovieTimeslotsResponse)) {
-    throw new Error("Expected argument of type GetMovieTimeslotsResponse");
+    throw new Error('Expected argument of type GetMovieTimeslotsResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_GetMovieTimeslotsResponse(buffer_arg) {
-  return control$plane_pb.GetMovieTimeslotsResponse.deserializeBinary(
-    new Uint8Array(buffer_arg)
-  );
+  return control$plane_pb.GetMovieTimeslotsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_MovieDetail(arg) {
   if (!(arg instanceof control$plane_pb.MovieDetail)) {
-    throw new Error("Expected argument of type MovieDetail");
+    throw new Error('Expected argument of type MovieDetail');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_MovieDetail(buffer_arg) {
-  return control$plane_pb.MovieDetail.deserializeBinary(
-    new Uint8Array(buffer_arg)
-  );
+  return control$plane_pb.MovieDetail.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-var ControlPlaneService = (exports.ControlPlaneService = {
+
+var ControlPlaneService = exports.ControlPlaneService = {
   getAvailableMovieList: {
-    path: "/ControlPlane/getAvailableMovieList",
+    path: '/ControlPlane/getAvailableMovieList',
     requestStream: false,
     responseStream: false,
     requestType: control$plane_pb.GetAvailableMovieListRequest,
@@ -121,7 +106,7 @@ var ControlPlaneService = (exports.ControlPlaneService = {
     responseDeserialize: deserialize_GetAvailableMovieListResponse,
   },
   getMovieDetail: {
-    path: "/ControlPlane/getMovieDetail",
+    path: '/ControlPlane/getMovieDetail',
     requestStream: false,
     responseStream: false,
     requestType: control$plane_pb.GetMovieDetailsRequest,
@@ -132,7 +117,7 @@ var ControlPlaneService = (exports.ControlPlaneService = {
     responseDeserialize: deserialize_MovieDetail,
   },
   getCinemaList: {
-    path: "/ControlPlane/getCinemaList",
+    path: '/ControlPlane/getCinemaList',
     requestStream: false,
     responseStream: false,
     requestType: control$plane_pb.GetCinemaListRequest,
@@ -143,7 +128,7 @@ var ControlPlaneService = (exports.ControlPlaneService = {
     responseDeserialize: deserialize_GetCinemaListResponse,
   },
   getMovieTimeslots: {
-    path: "/ControlPlane/getMovieTimeslots",
+    path: '/ControlPlane/getMovieTimeslots',
     requestStream: false,
     responseStream: false,
     requestType: control$plane_pb.GetMovieTimeslotsRequest,
@@ -153,7 +138,6 @@ var ControlPlaneService = (exports.ControlPlaneService = {
     responseSerialize: serialize_GetMovieTimeslotsResponse,
     responseDeserialize: deserialize_GetMovieTimeslotsResponse,
   },
-});
+};
 
-exports.ControlPlaneClient =
-  grpc.makeGenericClientConstructor(ControlPlaneService);
+exports.ControlPlaneClient = grpc.makeGenericClientConstructor(ControlPlaneService);
