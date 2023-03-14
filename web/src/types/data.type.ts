@@ -1,9 +1,36 @@
-import { Cinema, Movie, MovieDetail, MovieTimeslot } from "../../../api/grpc";
+export type ICinema = {
+  id: string;
+  name: string;
+  provider: string;
+  address: string;
+  territory: string;
+  district: string;
+};
 
-export type ICinema = Cinema.AsObject;
-export type IMovie = Movie.AsObject;
-export type IMovieTimeslot = MovieTimeslot.AsObject;
-export type IMovieDetail = MovieDetail.AsObject;
+export type IMovie = {
+  name: string;
+};
+
+export type IMovieTimeslot = {
+  start: string;
+  price: number;
+  house: string;
+  cinemaId: string;
+  cinemaName: string;
+  provider: string;
+  movieName: string;
+};
+
+export type IMovieDetail = {
+  id: string;
+  name: string;
+  provider: string;
+  duration: number;
+  rate: string;
+  language: string;
+  description: string;
+};
+
 export type ITMDBMovie = {
   adult: boolean;
   backdrop_path: string;

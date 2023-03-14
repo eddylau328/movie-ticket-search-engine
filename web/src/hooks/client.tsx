@@ -6,19 +6,20 @@ import {
   fetchMovieTimeslots,
   searchMovie,
 } from "../fetch/client";
-import {
-  IMovie,
-  ICinema,
-  IMovieTimeslot,
-  IMovieDetail,
-  ITMDBMovie,
-} from "../types/data.type";
+import { IMovie, ICinema, IMovieDetail, ITMDBMovie } from "../types/data.type";
+import { uniqBy } from "lodash";
+import { useAsync } from "react-use";
 
 export function useMovies() {
   const [movies, setMovies] = useState<IMovie[]>([]);
 
   useEffect(() => {
-    fetchMovies().then((res) => setMovies(res.data));
+    fetchMovies()
+      .then((res) => res.data)
+      .then((movies) =>
+        uniqBy(movies, (m) => m.name.replace(/\s/g, "").split("(")[0])
+      )
+      .then((data) => setMovies(data));
   }, []);
 
   return movies;
@@ -44,14 +45,13 @@ export function useCinemas() {
   return cinemas;
 }
 
-export function useTimeslots(name: string) {
-  const [timeslots, setTimeslots] = useState<IMovieTimeslot[]>([]);
-
-  useEffect(() => {
-    fetchMovieTimeslots(name).then((res) => setTimeslots(res.data));
+export function useAsyncTimeslots(name: string) {
+  const state = useAsync(async () => {
+    const response = await fetchMovieTimeslots(name);
+    return response.data;
   }, [name]);
 
-  return timeslots;
+  return state;
 }
 
 export function useTmdbMovie(name: string) {

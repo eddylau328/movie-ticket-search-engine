@@ -141,3 +141,51 @@ var ControlPlaneService = exports.ControlPlaneService = {
 };
 
 exports.ControlPlaneClient = grpc.makeGenericClientConstructor(ControlPlaneService);
+var EnquiryBotService = exports.EnquiryBotService = {
+  getAvailableMovieList: {
+    path: '/EnquiryBot/getAvailableMovieList',
+    requestStream: false,
+    responseStream: false,
+    requestType: control$plane_pb.GetAvailableMovieListRequest,
+    responseType: control$plane_pb.GetAvailableMovieListResponse,
+    requestSerialize: serialize_GetAvailableMovieListRequest,
+    requestDeserialize: deserialize_GetAvailableMovieListRequest,
+    responseSerialize: serialize_GetAvailableMovieListResponse,
+    responseDeserialize: deserialize_GetAvailableMovieListResponse,
+  },
+  getMovieDetail: {
+    path: '/EnquiryBot/getMovieDetail',
+    requestStream: false,
+    responseStream: false,
+    requestType: control$plane_pb.GetMovieDetailsRequest,
+    responseType: control$plane_pb.MovieDetail,
+    requestSerialize: serialize_GetMovieDetailsRequest,
+    requestDeserialize: deserialize_GetMovieDetailsRequest,
+    responseSerialize: serialize_MovieDetail,
+    responseDeserialize: deserialize_MovieDetail,
+  },
+  getCinemaList: {
+    path: '/EnquiryBot/getCinemaList',
+    requestStream: false,
+    responseStream: false,
+    requestType: control$plane_pb.GetCinemaListRequest,
+    responseType: control$plane_pb.GetCinemaListResponse,
+    requestSerialize: serialize_GetCinemaListRequest,
+    requestDeserialize: deserialize_GetCinemaListRequest,
+    responseSerialize: serialize_GetCinemaListResponse,
+    responseDeserialize: deserialize_GetCinemaListResponse,
+  },
+  getMovieTimeslots: {
+    path: '/EnquiryBot/getMovieTimeslots',
+    requestStream: false,
+    responseStream: false,
+    requestType: control$plane_pb.GetMovieTimeslotsRequest,
+    responseType: control$plane_pb.GetMovieTimeslotsResponse,
+    requestSerialize: serialize_GetMovieTimeslotsRequest,
+    requestDeserialize: deserialize_GetMovieTimeslotsRequest,
+    responseSerialize: serialize_GetMovieTimeslotsResponse,
+    responseDeserialize: deserialize_GetMovieTimeslotsResponse,
+  },
+};
+
+exports.EnquiryBotClient = grpc.makeGenericClientConstructor(EnquiryBotService);

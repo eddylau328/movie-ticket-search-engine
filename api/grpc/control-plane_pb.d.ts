@@ -10,14 +10,17 @@ export class Cinema extends jspb.Message {
   getName(): string;
   setName(value: string): void;
 
-  getProvider(): ProviderMap[keyof ProviderMap];
-  setProvider(value: ProviderMap[keyof ProviderMap]): void;
+  getProvider(): string;
+  setProvider(value: string): void;
 
-  getLocation(): string;
-  setLocation(value: string): void;
+  getAddress(): string;
+  setAddress(value: string): void;
 
-  getTerritory(): TerritoryMap[keyof TerritoryMap];
-  setTerritory(value: TerritoryMap[keyof TerritoryMap]): void;
+  getTerritory(): string;
+  setTerritory(value: string): void;
+
+  getDistrict(): string;
+  setDistrict(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Cinema.AsObject;
@@ -33,9 +36,10 @@ export namespace Cinema {
   export type AsObject = {
     id: string,
     name: string,
-    provider: ProviderMap[keyof ProviderMap],
-    location: string,
-    territory: TerritoryMap[keyof TerritoryMap],
+    provider: string,
+    address: string,
+    territory: string,
+    district: string,
   }
 }
 
@@ -66,11 +70,20 @@ export class MovieTimeslot extends jspb.Message {
   getPrice(): number;
   setPrice(value: number): void;
 
-  getLocation(): string;
-  setLocation(value: string): void;
-
   getHouse(): string;
   setHouse(value: string): void;
+
+  getCinemaId(): string;
+  setCinemaId(value: string): void;
+
+  getCinemaName(): string;
+  setCinemaName(value: string): void;
+
+  getProvider(): string;
+  setProvider(value: string): void;
+
+  getMovieName(): string;
+  setMovieName(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): MovieTimeslot.AsObject;
@@ -86,8 +99,11 @@ export namespace MovieTimeslot {
   export type AsObject = {
     start: string,
     price: number,
-    location: string,
     house: string,
+    cinemaId: string,
+    cinemaName: string,
+    provider: string,
+    movieName: string,
   }
 }
 
@@ -98,8 +114,8 @@ export class MovieDetail extends jspb.Message {
   getName(): string;
   setName(value: string): void;
 
-  getProvider(): ProviderMap[keyof ProviderMap];
-  setProvider(value: ProviderMap[keyof ProviderMap]): void;
+  getProvider(): string;
+  setProvider(value: string): void;
 
   getDuration(): number;
   setDuration(value: number): void;
@@ -127,7 +143,7 @@ export namespace MovieDetail {
   export type AsObject = {
     id: string,
     name: string,
-    provider: ProviderMap[keyof ProviderMap],
+    provider: string,
     duration: number,
     rate: string,
     language: string,
@@ -143,8 +159,8 @@ export class GetAvailableMovieListRequest extends jspb.Message {
 
   hasCinemaProvider(): boolean;
   clearCinemaProvider(): void;
-  getCinemaProvider(): ProviderMap[keyof ProviderMap];
-  setCinemaProvider(value: ProviderMap[keyof ProviderMap]): void;
+  getCinemaProvider(): string;
+  setCinemaProvider(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetAvailableMovieListRequest.AsObject;
@@ -159,7 +175,7 @@ export class GetAvailableMovieListRequest extends jspb.Message {
 export namespace GetAvailableMovieListRequest {
   export type AsObject = {
     cinemaId: string,
-    cinemaProvider: ProviderMap[keyof ProviderMap],
+    cinemaProvider: string,
   }
 }
 
@@ -259,8 +275,8 @@ export class GetMovieTimeslotsRequest extends jspb.Message {
   getTimeGte(): string;
   setTimeGte(value: string): void;
 
-  getDistrict(): DistrictMap[keyof DistrictMap];
-  setDistrict(value: DistrictMap[keyof DistrictMap]): void;
+  getDistrict(): string;
+  setDistrict(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetMovieTimeslotsRequest.AsObject;
@@ -279,7 +295,7 @@ export namespace GetMovieTimeslotsRequest {
     priceGte: number,
     timeLte: string,
     timeGte: string,
-    district: DistrictMap[keyof DistrictMap],
+    district: string,
   }
 }
 
@@ -304,41 +320,4 @@ export namespace GetMovieTimeslotsResponse {
     movieTimeslotsList: Array<MovieTimeslot.AsObject>,
   }
 }
-
-export interface ProviderMap {
-  MCL: 0;
-}
-
-export const Provider: ProviderMap;
-
-export interface DistrictMap {
-  ISLANDS: 0;
-  KWAI_TSING: 1;
-  NORTH: 2;
-  SAI_KUNG: 3;
-  SHA_TIN: 4;
-  TAI_PO: 5;
-  TSUEN_WAN: 6;
-  TUEN_MUN: 7;
-  YUEN_LONG: 8;
-  KOWLOON_CITY: 9;
-  KWUN_TONG: 10;
-  SHAM_SHUI_PO: 11;
-  WONG_TAI_SIN: 12;
-  YAU_TSIM_MONG: 13;
-  CENTRAL_AND_WESTERN: 14;
-  EASTERN: 15;
-  SOUTHERN: 16;
-  WAN_CHAI: 17;
-}
-
-export const District: DistrictMap;
-
-export interface TerritoryMap {
-  KOWLOON: 0;
-  NEW_TERRITORIES: 1;
-  HONG_KONG_ISLAND: 2;
-}
-
-export const Territory: TerritoryMap;
 

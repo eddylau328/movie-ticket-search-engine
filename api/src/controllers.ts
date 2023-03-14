@@ -1,8 +1,6 @@
 import express from "express";
 import { promisify } from "util";
 import {
-  GetAvailableMovieListRequest,
-  GetAvailableMovieListResponse,
   GetCinemaListRequest,
   GetCinemaListResponse,
   GetMovieDetailsRequest,
