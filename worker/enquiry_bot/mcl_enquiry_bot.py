@@ -84,15 +84,14 @@ class MCLEnquiryBot(EnquiryBot):
                                 f'{now.year} {raw_date} {time} {time_locale}',
                                 '%Y %d/%m %I:%M %p',
                             ).astimezone(hk_zone)
-                            house, price = chunk[3].split(' ')
+                            house, price = chunk[3].split('$')
                             timeslots.append(
                                 MovieTimeslot(
                                     start=start,
-                                    price=float(price.replace('$', '')),
+                                    price=float(price.strip()),
                                     cinema_id=cinema_id,
                                     cinema_name=cinema_name,
-
-                                    house=house,
+                                    house=house.strip(),
                                     provider=self.provider,
                                 )
                             )

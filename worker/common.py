@@ -4,11 +4,20 @@ from dataclasses import dataclass, asdict
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional
+import control_plane_pb2 as pb2
 
 
 class Provider(str, Enum):
     MCL = 'mcl-cinemas'
     GOLDEN_HARVEST = 'golden-harvest'
+
+    @classmethod
+    def map_proto_enum(cls, e: Provider):
+        mapping = {
+            Provider.MCL: pb2.Provider.Value('MCL'),
+            Provider.GOLDEN_HARVEST: pb2.Provider.Value('GOLDEN_HARVEST'),
+        }
+        return mapping[e]
 
 
 class District(str, Enum):
@@ -41,6 +50,30 @@ class District(str, Enum):
                     return district
         return None
 
+    @classmethod
+    def map_proto_enum(cls, e: District):
+        mapping = {
+            District.ISLANDS: pb2.District.ISLANDS,
+            District.KWAI_TSING: pb2.District.KWAI_TSING,
+            District.NORTH: pb2.District.NORTH,
+            District.SAI_KUNG: pb2.District.SAI_KUNG,
+            District.SHA_TIN: pb2.District.SHA_TIN,
+            District.TAI_PO: pb2.District.TAI_PO,
+            District.TSUEN_WAN: pb2.District.TSUEN_WAN,
+            District.TUEN_MUN: pb2.District.TUEN_MUN,
+            District.YUEN_LONG: pb2.District.YUEN_LONG,
+            District.KOWLOON_CITY: pb2.District.KOWLOON_CITY,
+            District.KWUN_TONG: pb2.District.KWUN_TONG,
+            District.SHAM_SHUI_PO: pb2.District.SHAM_SHUI_PO,
+            District.WONG_TAI_SIN: pb2.District.WONG_TAI_SIN,
+            District.YAU_TSIM_MONG: pb2.District.YAU_TSIM_MONG,
+            District.CENTRAL_AND_WESTERN: pb2.District.CENTRAL_AND_WESTERN,
+            District.EASTERN: pb2.District.EASTERN,
+            District.SOUTHERN: pb2.District.SOUTHERN,
+            District.WAN_CHAI: pb2.District.WAN_CHAI,
+        }
+        return mapping[e]
+
 
 class Territory(str, Enum):
     KOWLOON = 'kowloon'
@@ -56,6 +89,15 @@ class Territory(str, Enum):
                 if check(address, areas['zh']) or check(address, areas['en']):
                     return territory
         return None
+
+    @classmethod
+    def map_proto_enum(cls, e: Territory):
+        mapping = {
+            Territory.HONG_KONG_ISLAND: pb2.Territory.HONG_KONG_ISLAND,
+            Territory.KOWLOON: pb2.Territory.KOWLOON,
+            Territory.NEW_TERRITORIES: pb2.Territory.NEW_TERRITORIES,
+        }
+        return mapping[e]
 
 
 AREAS_MAP = {
@@ -405,6 +447,16 @@ class MovieTimeslot:
         res['provider'] = self.provider.value
         res['start'] = self.start.isoformat()
         return res
+
+    def proto(self) -> pb2.MovieTimeslot:
+        return pb2.MovieTimeslot(
+            start=self.start.isoformat(),
+            price=self.price,
+            cinema_id=self.cinema_id,
+            cinema_name=self.cinema_name,
+            provider=Provider.map_proto_enum(self.provider),
+            house=self.house,
+        )
 
 
 class EnquiryBot(ABC):

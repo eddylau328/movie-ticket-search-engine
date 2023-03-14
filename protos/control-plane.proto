@@ -36,8 +36,9 @@ message Cinema {
   string id = 1;
   string name = 2;
   Provider provider = 3;
-  string location = 4;
+  string address = 4;
   Territory territory = 5;
+  District district = 6;
 }
 
 message Movie {
@@ -48,8 +49,11 @@ message Movie {
 message MovieTimeslot {
   string start = 1;
   float price = 2;
-  string location = 3;
+  string address = 3;
   string house = 4;
+  string cinema_id = 5;
+  string cinema_name = 6;
+  Provider provider = 7;
 }
 
 message MovieDetail {
