@@ -39,8 +39,10 @@ class EnquiryBotService(pb2_grpc.EnquiryBotServicer):
         request,
         context,
     ) -> List[Cinema]:
+        print('testings')
         results = asyncio.run(self.bot.getCinemaList())
-        return pb2.GetCinemaListResponse(results)
+        print(results)
+        return pb2.GetCinemaListResponse([])
 
     def getMovieTimeslots(
         self,

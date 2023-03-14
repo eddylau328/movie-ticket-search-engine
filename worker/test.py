@@ -1,27 +1,27 @@
-import grpc
 import control_plane_pb2_grpc as pb2_grpc
 import control_plane_pb2 as pb2
 
+import grpc
 
-class EnquiryBotClient:
-    """
-    Enquiry Bot Client for gRPC functionality
-    """
 
-    # e.g. server_url 'localhost:50051'
-    def __init__(self, server_url):
-        self.channel = grpc.insecure_channel(server_url)
+class EnquiryClient:
+    def __init__(self):
+        self.host = 'localhost'
+        self.port = 50051
+        self.channel = grpc.insecure_channel(
+            '{}:{}'.format(self.host, self.port))
+
         # bind the client and the server
         self.stub = pb2_grpc.EnquiryBotStub(self.channel)
 
-    async def getAvailableMovieList(self, **kwargs):
+    def getAvailableMovieList(self, **kwargs):
         """
         Client function to call the rpc for getAvailableMovieList
         """
         request_body = pb2.GetAvailableMovieListRequest(**kwargs)
         return self.stub.getAvailableMovieList(request_body)
 
-    async def getMovieDetail(self, id: str):
+    def getMovieDetail(self, id: str):
         """
         Client function to call the rpc for getMovieDetail
         """
@@ -33,11 +33,17 @@ class EnquiryBotClient:
         Client function to call the rpc for getCinemaList
         """
         request_body = pb2.GetCinemaListRequest()
-        return self.stub.getCinemaList(request_body)
+        return self.stub.getCinemaList()
 
-    async def getMovieTimeslots(self, **kwargs):
+    def getMovieTimeslots(self, **kwargs):
         """
         Client function to call the rpc for getMovieTimeslots
         """
         request_body = pb2.GetMovieTimeslotsRequest(**kwargs)
         return self.stub.getCinemaList(request_body)
+
+
+if __name__ == '__main__':
+    client = EnquiryClient()
+    result = client.getCinemaList()
+    print(result)
