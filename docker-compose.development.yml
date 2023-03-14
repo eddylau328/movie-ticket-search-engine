@@ -1,0 +1,44 @@
+services:
+  api:
+    build:
+      context: api
+    ports:
+      - 8000:8000
+    environment:
+      - CONTROL_PLANE_ADDRESS=control-plane:50051
+    depends_on:
+      - control-plane
+  web:
+    build:
+      context: web
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+  control-plane:
+    build:
+      context: control-plane
+      target: runtime
+    ports:
+      - 50051:50051
+    environment:
+      - MCL_BOT=mcl-worker:50051
+      - GOLDEN_HARVEST_BOT=golden-harvest-worker:50051
+  mcl-worker:
+    build:
+      context: worker
+      target: runtime
+    ports:
+      - 50052:50051
+    command: python main.py mcl-cinemas
+    volumes:
+      - ./control-plane:/usr/src/app
+  golden-harvest-worker:
+    build:
+      context: worker
+      target: runtime
+    ports:
+      - 50053:50051
+    command: python main.py golden-harvest
+    volumes:
+      - ./worker:/usr/src/app
