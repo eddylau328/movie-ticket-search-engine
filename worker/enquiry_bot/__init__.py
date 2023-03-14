@@ -1,1 +1,2 @@
 from .mcl_enquiry_bot import MCLEnquiryBot
+from .golden_harvest_enquiry_bot import GoldenHarvestEnquiryBot
