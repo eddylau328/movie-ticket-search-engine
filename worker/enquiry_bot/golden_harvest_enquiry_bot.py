@@ -1,6 +1,8 @@
-from typing import List
+from typing import List, Tuple
 from string import Template
 from datetime import datetime
+import itertools
+import json
 
 from common import (
     EnquiryBot,
@@ -22,7 +24,126 @@ import asyncio
 class GoldenHarvestEnquiryBot(EnquiryBot):
 
     async def get_movie_timeslots(self, movie_id: str, **kwargs) -> List[MovieTimeslot]:
-        return []
+
+        async def get_price(session, price_url) -> List[float]:
+            price_list_xpath = '/html/body/div[2]/div/p/u'
+            async with session.get(price_url) as resp:
+                text = await resp.read()
+                soup = BeautifulSoup(text.decode('utf-8'), 'html.parser')
+                dom = etree.HTML(str(soup))
+                raw_price_list = dom.xpath(price_list_xpath)
+                datum = [json.loads(item.get('data-message'))
+                         for item in raw_price_list]
+                for data in datum:
+                    if data['typeName'] == 'Adult':
+                        return data['price']
+                return 0
+
+        async def get_available_dates(session, url) -> List[str]:
+            time_select_xpath = '//*[@id="time-select"]'
+            dates = []
+            async with session.get(detail_url) as resp:
+                text = await resp.read()
+                soup = BeautifulSoup(text.decode('utf-8'), 'html.parser')
+                dom = etree.HTML(str(soup))
+                for option in dom.xpath(time_select_xpath)[0].getchildren():
+                    dates.append(option.get('value'))
+            return dates
+
+        async def get_timeslots(session, date, url) -> Tuple[List[MovieTimeslot], List[str]]:
+            price_base_template_url = Template(
+                'https://www.goldenharvest.com//seatPlan/index?type=read&film_show_id=$film_show_id&from_type=web'
+            )
+            cinema_name_xpath_template = Template(
+                '/html/body/div[$movie_count]/div/div[1]/h1'
+            )
+            cinema_id_xpath_template = Template(
+                '/html/body/div[$movie_count]/div/div[2]/a'
+            )
+            house_xpath_template = Template(
+                '/html/body/div[$movie_count]/div/div[2]/a[$timeslot_count]/div/h2'
+            )
+            timeslots = []
+            price_urls = []
+            async with session.get(url) as resp:
+                text = await resp.read()
+                soup = BeautifulSoup(text.decode('utf-8'), 'html.parser')
+                dom = etree.HTML(str(soup))
+                for movie_count in range(1, len(dom.xpath('/html/body/div')) + 1):
+                    cinema_name = dom.xpath(
+                        cinema_name_xpath_template.safe_substitute(
+                            movie_count=movie_count,
+                        ),
+                    )[0].text
+                    timeslot_anchors = dom.xpath(
+                        cinema_id_xpath_template.safe_substitute(
+                            movie_count=movie_count,
+                        ),
+                    )
+                    if timeslot_anchors == 0:
+                        continue
+                    cinema_id = timeslot_anchors[0].get(
+                        'href').split('cinema_id=')[1].split('&')[0]
+                    for timeslot_count in range(1, len(timeslot_anchors) + 1):
+                        anchor = timeslot_anchors[timeslot_count - 1]
+                        house = dom.xpath(
+                            house_xpath_template.safe_substitute(
+                                movie_count=movie_count,
+                                timeslot_count=timeslot_count,
+                            )
+                        )[0].text
+                        hk_zone = pytz.timezone('Asia/Hong_Kong')
+                        # yyyy MM-DD
+                        time = anchor.get('data-time')
+                        start = datetime.strptime(
+                            f'{date} {time}',
+                            '%Y-%m-%d %H:%M',
+                        ).astimezone(hk_zone)
+                        timeslots.append(MovieTimeslot(
+                            start=start,
+                            price=0.0,
+                            cinema_id=cinema_id,
+                            cinema_name=cinema_name,
+                            provider=self.provider,
+                            house=house,
+                        ))
+                        price_urls.append(price_base_template_url.safe_substitute(
+                            film_show_id=anchor.get('href').split(
+                                'film_show_id=')[1].split('&')[0],
+                        ))
+
+            return timeslots, price_urls
+
+        # date yyyy-mm-dd
+        detail_page_url_template = Template(
+            'https://www.goldenharvest.com/film/detail?film_id=$movie_id'
+        )
+        timeslot_query_url_template = Template(
+            'https://www.goldenharvest.com//film/ajaxFilmShow?film_id=$movie_id&date=$date'
+        )
+        async with aiohttp.ClientSession() as session:
+            detail_url = detail_page_url_template.safe_substitute(
+                movie_id=movie_id)
+            dates = await get_available_dates(session, detail_url)
+
+            results = await asyncio.gather(*[
+                get_timeslots(
+                    session,
+                    date,
+                    timeslot_query_url_template.safe_substitute(
+                        movie_id=movie_id,
+                        date=date,
+                    ),
+                ) for date in dates
+            ])
+            timeslots = list(itertools.chain.from_iterable(
+                [r[0] for r in results]))
+            price_urls = list(itertools.chain.from_iterable(
+                [r[1] for r in results]))
+            prices = await asyncio.gather(*[get_price(session, price_url) for price_url in price_urls])
+            for i, price in enumerate(prices):
+                timeslots[i].price = price
+            return timeslots
 
     async def get_available_movie_list(self, **kwargs) -> List[Movie]:
         template_url = Template(
@@ -62,27 +183,6 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
                         movie_name = dom.xpath(movie_name_xpath)[0].text
                         results.append(Movie(id, movie_name))
         return results
-        # for option in dom.xpath(select_x_path)[0].getchildren():
-        #     content = etree.fromstring(option.get('data-content'))
-        #     # e.g. ['03月14日 (二)', '10:10 AM', 'IMAX / 7 院']
-        #     chunks = content.xpath('/div/h1')[0].text.split(',')
-        #     raw_date = chunks[0].split(' ')[0].replace(
-        #         '月', '-').replace('日', '')
-        #     raw_time = chunks[1]
-        #     hk_zone = pytz.timezone('Asia/Hong_Kong')
-        #     now = datetime.now(hk_zone)
-        #     print(type(now.year))
-        #     print(type(raw_date))
-        #     print(type(raw_time))
-        #     start = datetime.strftime(
-        #         f'{now.year} {raw_date} {raw_time}',
-        #         '%Y %m-%d %I:%M %p',
-        #     )
-        #     print(start)
-
-        # MovieTimeslot(
-        # dom.xpath('/html/body/div[1]/div/div[2]/div[1]')[0].text,
-        # )
 
     async def get_cinema_list(self) -> List[Cinema]:
         url = 'https://www.goldenharvest.com/film/list?category=now'
@@ -139,8 +239,6 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
                     detail_url_template.safe_substitute(cinema_id=id),
                 ) for id in cinema_ids]
             )
-            # cinema = await get_detail_cinema(session, cinema_ids[0], detail_url_template.safe_substitute(cinema_id=cinema_ids[0]), )
-            # cinemas = [cinema]
             return cinemas
 
     @ property
