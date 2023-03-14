@@ -50,22 +50,25 @@ class ControlPlaneService(pb2_grpc.ControlPlaneServicer):
         request,
         context
     ) -> List[Cinema]:
-        groups = [
-            bot.getCinemaList()
+        results = list(itertools.chain.from_iterable([
+            bot.getCinemaList().cinema_list
             for bot in self.provider_bots
-        ]
-        print(groups)
-        results = list(itertools.chain.from_iterable(groups))
-        return pb2.GetCinemaListResponse(results)
+        ]))
+        return pb2.GetCinemaListResponse(
+            cinema_list=results,
+        )
 
     def getMovieTimeslots(
         self,
         request,
         context
     ) -> List[MovieTimeslot]:
-        groups = asyncio.gather(*[
-            bot.getMovieTimeslots(request.movie_name)
+        results = list(itertools.chain.from_iterable([
+            bot.getMovieTimeslots(
+                movie_name=request.movie_name
+            ).movie_timeslots
             for bot in self.provider_bots
-        ])
-        results = list(itertools.chain.from_iterable(asyncio.run(groups)))
-        return pb2.GetMovieTimeslotsResponse(results)
+        ]))
+        return pb2.GetMovieTimeslotsResponse(
+            movie_timeslots=results,
+        )

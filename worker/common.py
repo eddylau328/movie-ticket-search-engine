@@ -414,6 +414,16 @@ class Cinema:
         res['territory'] = self.territory.value
         return res
 
+    def proto(self) -> pb2.Cinema:
+        return pb2.Cinema(
+            id=self.id,
+            name=self.name,
+            provider=self.provider.value,
+            address=self.address,
+            territory=self.territory.value,
+            district=self.district.value,
+        )
+
 
 @dataclass
 class Movie:
@@ -451,10 +461,10 @@ class MovieTimeslot:
     def proto(self) -> pb2.MovieTimeslot:
         return pb2.MovieTimeslot(
             start=self.start.isoformat(),
-            price=self.price,
+            price=float(self.price),
             cinema_id=self.cinema_id,
             cinema_name=self.cinema_name,
-            provider=Provider.map_proto_enum(self.provider),
+            provider=self.provider.value,
             house=self.house,
         )
 
