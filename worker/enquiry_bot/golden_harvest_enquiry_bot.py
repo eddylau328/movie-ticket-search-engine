@@ -23,7 +23,7 @@ import asyncio
 
 class GoldenHarvestEnquiryBot(EnquiryBot):
 
-    async def get_movie_timeslots(self, movie_name: str, **kwargs) -> List[MovieTimeslot]:
+    async def getMovieTimeslots(self, movie_name: str, **kwargs) -> List[MovieTimeslot]:
 
         async def get_price(session, price_url) -> List[float]:
             price_list_xpath = '/html/body/div[2]/div/p/u'
@@ -121,7 +121,7 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
         timeslot_query_url_template = Template(
             'https://www.goldenharvest.com//film/ajaxFilmShow?film_id=$movie_id&date=$date'
         )
-        movie_list = await self.get_available_movie_list()
+        movie_list = await self.getAvailableMovieList()
         movie_id = None
         for movie in movie_list:
             if movie.name == movie_name:
@@ -152,7 +152,7 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
                 timeslots[i].price = price
             return timeslots
 
-    async def get_available_movie_list(self, **kwargs) -> List[Movie]:
+    async def getAvailableMovieList(self, **kwargs) -> List[Movie]:
         template_url = Template(
             'https://www.goldenharvest.com//film/ajaxList?category=now&page=$page&lang=zh_tw'
         )
@@ -191,7 +191,7 @@ class GoldenHarvestEnquiryBot(EnquiryBot):
                         results.append(Movie(id, movie_name))
         return results
 
-    async def get_cinema_list(self) -> List[Cinema]:
+    async def getCinemaList(self) -> List[Cinema]:
         url = 'https://www.goldenharvest.com/film/list?category=now'
         detail_url_template = Template(
             'https://www.goldenharvest.com/cinema/schedule?cinema_id=$cinema_id',

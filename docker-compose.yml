@@ -17,3 +17,20 @@ services:
       target: runtime
     ports:
       - 50051:50051
+    environment:
+      - MCL_BOT=mcl-worker:50051
+      - GOLDEN_HARVEST_BOT=golden-harvest-worker:50051
+  mcl-worker:
+    build:
+      context: worker
+      target: runtime
+    ports:
+      - 50052:50051
+    command: python main.py mcl-cinemas
+  golden-harvest-worker:
+    build:
+      context: worker
+      target: runtime
+    ports:
+      - 50053:50051
+    command: python main.py golden-harvest

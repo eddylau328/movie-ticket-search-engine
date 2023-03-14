@@ -409,13 +409,13 @@ class MovieTimeslot:
 
 class EnquiryBot(ABC):
 
-    async def get_movie_details(self, id: str) -> Optional[MovieDetail]:
+    async def getMovieDetails(self, id: str) -> Optional[MovieDetail]:
         """
         Provide description about the movie 
         """
         return None
 
-    async def get_movie_timeslots(self, movie_name: str, **kwargs) -> List[MovieTimeslot]:
+    async def getMovieTimeslots(self, movie_name: str, **kwargs) -> List[MovieTimeslot]:
         """
         Provide timeslots of that day in different places
 
@@ -429,7 +429,7 @@ class EnquiryBot(ABC):
         return []
 
     @abstractmethod
-    async def get_available_movie_list(self, **kwargs) -> List[Movie]:
+    async def getAvailableMovieList(self, **kwargs) -> List[Movie]:
         """
         Provide list of movies that is available to watch
 
@@ -440,7 +440,7 @@ class EnquiryBot(ABC):
         pass
 
     @abstractmethod
-    async def get_cinema_list(self) -> List[Cinema]:
+    async def getCinemaList(self) -> List[Cinema]:
         """
         Provide a list of cinemas in Hong Kong
         """
@@ -450,3 +450,41 @@ class EnquiryBot(ABC):
     @abstractmethod
     def provider(self) -> Provider:
         pass
+
+
+class EnquiryBotInterface:
+
+    async def getMovieDetails(self, id: str) -> Optional[MovieDetail]:
+        """
+        Provide description about the movie 
+        """
+        raise NotImplementedError
+
+    async def getMovieTimeslots(self, movie_id: str, **kwargs) -> List[MovieTimeslot]:
+        """
+        Provide timeslots of that day in different places
+
+        kwargs
+        - price_lte: float  # less than equal
+        - price_gte: float  # greater than equal
+        - time_lte: str     # less than equal
+        - time_gte: str     # greater than equal
+        - district: District
+        """
+        raise NotImplementedError
+
+    async def getAvailableMovieList(self, **kwargs) -> List[Movie]:
+        """
+        Provide list of movies that is available to watch
+
+        kwargs
+        - cinema_id         : need to provide for cinema_provider
+        - cinema_provider   : need to provide with cinema_id
+        """
+        raise NotImplementedError
+
+    async def getCinemaList(self) -> List[Cinema]:
+        """
+        Provide a list of cinemas in Hong Kong
+        """
+        raise NotImplementedError
